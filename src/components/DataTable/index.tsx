@@ -7,7 +7,7 @@ import PriceChange from '@components/PriceChange';
 import ProgressGauge from '@components/GaugeChart';
 import PercentileSlider from '@components/PercentileSlider';
 import DataTableSkeleton from './DataTableSkeleton';
-import './DataTable.css';
+import './DataTable.less';
 
 // 导入图标
 import stockIndexIcon from '@assets/icon/stock-index.svg';
@@ -360,8 +360,9 @@ const DataTable = memo<DataTableProps>(({ data, loading, selectedTag, skeletonLo
   }
 
   return (
-    <div className="data-table-card">
-      <Table
+    <div className="data-table">
+      <div className="data-table-card">
+        <Table
         key={sortedInfoKey}
         columns={columns}
         dataSource={sortedData}
@@ -397,7 +398,8 @@ const DataTable = memo<DataTableProps>(({ data, loading, selectedTag, skeletonLo
             ),
           },
         }}
-      />
+        />
+      </div>
     </div>
   );
 });

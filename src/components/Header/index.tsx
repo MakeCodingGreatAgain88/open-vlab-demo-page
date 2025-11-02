@@ -1,6 +1,6 @@
 import { Layout, Menu, Button, Dropdown } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
-import './Header.css';
+import './Header.less';
 
 const { Header: AntHeader } = Layout;
 
@@ -26,7 +26,8 @@ const Header = memo(() => {
   ];
 
   return (
-    <AntHeader className="app-header">
+    <div className="header">
+      <AntHeader className="app-header">
       <div className="header-left">
         <div className="logo">OpenVLab</div>
         <Menu
@@ -60,6 +61,7 @@ const Header = memo(() => {
         </Dropdown>
       </div>
     </AntHeader>
+    </div>
   );
 });
 

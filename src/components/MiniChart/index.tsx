@@ -1,4 +1,4 @@
-import './MiniChart.css';
+import './MiniChart.less';
 
 interface MiniChartProps {
   data: { time: number; value: number; value1: number }[];
@@ -220,10 +220,11 @@ const MiniChart = memo<MiniChartProps>(({ data, height = 40 }: MiniChartProps) =
   }, [viewBox]);
 
   return (
-    <div 
-      className="w-full block"
-      style={{ height: `${textY}px`, minHeight: `${textY}px` }} // 动态高度需要内联样式，包含文本区域
-    >
+    <div className="mini-chart">
+      <div 
+        className="w-full block"
+        style={{ height: `${textY}px`, minHeight: `${textY}px` }} // 动态高度需要内联样式，包含文本区域
+      >
       <svg
         ref={svgRef}
         viewBox={viewBox}
@@ -298,6 +299,7 @@ const MiniChart = memo<MiniChartProps>(({ data, height = 40 }: MiniChartProps) =
           </g>
         )}
       </svg>
+      </div>
     </div>
   );
 });

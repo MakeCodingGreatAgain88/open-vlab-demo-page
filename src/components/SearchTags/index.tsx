@@ -1,6 +1,6 @@
 import { Tag, Skeleton } from 'antd'
 import type { TagType } from '@/types'
-import './SearchTags.css'
+import './SearchTags.less'
 
 // 导入图标
 import stockIndexIcon from '@assets/icon/stock-index.svg'
@@ -40,7 +40,8 @@ const tagIconMap: Record<TagType, string | null> = {
 const SearchTags = memo<SearchTagsProps>(({selectedTag, onTagChange, skeletonLoading = false}: SearchTagsProps) => {
     if (skeletonLoading) {
         return (
-            <div className="search-tags-wrapper">
+            <div className="search-tags">
+                <div className="search-tags-wrapper">
                 {/* 标题骨架 */ }
                 <Skeleton.Input
                     active
@@ -71,13 +72,15 @@ const SearchTags = memo<SearchTagsProps>(({selectedTag, onTagChange, skeletonLoa
                     )) }
                 </div>
             </div>
+            </div>
         )
     }
 
     return (
-        <div className="search-tags-wrapper">
+        <div className="search-tags">
+            <div className="search-tags-wrapper">
             <div className="search-tags-title">板块筛选</div>
-            <div className="search-tags">
+            <div className="search-tags-content">
                 <div className="search-tags-list">
                     { allTags.map((tag) => {
                         const icon = tagIconMap[tag]
@@ -99,6 +102,7 @@ const SearchTags = memo<SearchTagsProps>(({selectedTag, onTagChange, skeletonLoa
                         )
                     }) }
                 </div>
+            </div>
             </div>
         </div>
     )

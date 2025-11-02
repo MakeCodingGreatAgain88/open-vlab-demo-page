@@ -1,0 +1,131 @@
+.chart-view {
+  .chart-view-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .chart-container {
+    width: 100%;
+    height: 600px;
+    position: relative;
+
+    @media (max-width: 1024px) {
+      height: 500px;
+    }
+
+    @media (max-width: 768px) {
+      height: 400px;
+      margin: 0 -8px; /* 负边距抵消卡片内边距，增加图表可用宽度 */
+      width: calc(100% + 16px);
+      padding: 0;
+
+      /* 缩小价格刻度文字大小 */
+      svg text {
+        font-size: 10px !important;
+      }
+
+      /* 调整价格刻度区域的宽度 */
+      > div > div:last-child {
+        max-width: 45px !important;
+        min-width: 45px !important;
+
+        svg text {
+          font-size: 10px !important;
+        }
+      }
+    }
+
+    @media (max-width: 480px) {
+      height: 300px;
+      margin: 0 -4px; /* 小屏进一步减少边距 */
+      width: calc(100% + 8px);
+
+      /* 进一步缩小价格刻度文字 */
+      svg text {
+        font-size: 9px !important;
+      }
+
+      /* 小屏进一步减少价格刻度区域宽度 */
+      > div > div:last-child {
+        max-width: 35px !important;
+        min-width: 35px !important;
+
+        svg text {
+          font-size: 9px !important;
+        }
+      }
+    }
+  }
+
+  .chart-tooltip {
+    position: absolute;
+    background: rgba(29, 33, 41, 0.95);
+    border: 1px solid #1A1A1A;
+    border-radius: 4px;
+    padding: 8px 12px;
+    pointer-events: none;
+    z-index: 1000;
+    left: 20px;
+    top: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    max-width: calc(100% - 40px);
+
+    @media (max-width: 1024px) {
+      padding: 6px 10px;
+      font-size: 11px;
+    }
+
+    @media (max-width: 768px) {
+      left: 10px;
+      top: 10px;
+      padding: 6px 8px;
+      max-width: calc(100% - 20px);
+    }
+
+    @media (max-width: 480px) {
+      left: 8px;
+      top: 8px;
+      padding: 4px 6px;
+      max-width: calc(100% - 16px);
+    }
+  }
+
+  .tooltip-row {
+    display: flex;
+    gap: 16px;
+    font-size: 12px;
+    color: #FFFFFF;
+    white-space: nowrap;
+    flex-wrap: wrap;
+
+    span {
+      white-space: nowrap;
+      display: inline-block;
+    }
+
+    @media (max-width: 1024px) {
+      gap: 12px;
+      font-size: 11px;
+    }
+
+    @media (max-width: 768px) {
+      gap: 8px;
+      font-size: 10px;
+      flex-wrap: wrap;
+
+      span {
+        font-size: 10px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      gap: 6px;
+      font-size: 9px;
+
+      span {
+        font-size: 9px;
+      }
+    }
+  }
+}

@@ -6,7 +6,7 @@ import ErrorBoundary from '@components/ErrorBoundary';
 import { useParams } from 'react-router-dom';
 import { useMarketDetails } from '@hooks/useMarketDetails';
 import ChartView from './ChartView';
-import './MarketDetails.css';
+import './MarketDetails.less';
 
 const { Content } = Layout;
 
@@ -46,7 +46,8 @@ const MarketDetails = () => {
     <ErrorBoundary>
       <Layout className="min-h-screen">
         <Header />
-        <Content className="market-details-content">
+        <Content className="market-details">
+          <div className="market-details-content">
           <div className="market-details-container">
             {/* Head 区域：展示现价、涨幅百分比、实波、隐波、偏度 */}
             <Card className="market-details-head">
@@ -93,6 +94,7 @@ const MarketDetails = () => {
                 baseData={data}
               />
             </Card>
+          </div>
           </div>
         </Content>
       </Layout>

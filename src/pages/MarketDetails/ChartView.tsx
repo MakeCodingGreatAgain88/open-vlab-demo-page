@@ -1,7 +1,7 @@
 import { createChart, IChartApi, ISeriesApi, ColorType, CandlestickSeries, LineSeries, createSeriesMarkers } from 'lightweight-charts';
 import type { MarketDataItem } from '@/types';
 import type { CandlestickData, LineData, Time, SeriesMarker } from 'lightweight-charts';
-import './ChartView.css';
+import './ChartView.less';
 
 interface ChartDataPoint {
   time: number;
@@ -377,7 +377,8 @@ const ChartView = memo<ChartViewProps>(({ chartType, data, baseData }) => {
   }, [data, chartType]);
 
   return (
-    <div className="chart-view-container">
+    <div className="chart-view">
+      <div className="chart-view-container">
       <div ref={chartContainerRef} className="chart-container" />
       {tooltipData && (
         <div ref={tooltipRef} className="chart-tooltip">
@@ -394,6 +395,7 @@ const ChartView = memo<ChartViewProps>(({ chartType, data, baseData }) => {
           </div>
         </div>
       )}
+      </div>
     </div>
   );
 });

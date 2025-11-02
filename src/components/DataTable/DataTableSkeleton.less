@@ -1,0 +1,54 @@
+/* 数据表格骨架图样式 */
+.data-table {
+  .data-table-skeleton {
+    .ant-skeleton-content {
+      .ant-skeleton-title,
+      .ant-skeleton-paragraph > li {
+        background: #1A1A1A !important;
+        border: 1px solid #2A2A2A !important;
+        height: 16px !important;
+        margin-bottom: 12px !important;
+        border-radius: 4px !important;
+      }
+    }
+
+    .ant-skeleton-active .ant-skeleton-content {
+      .ant-skeleton-title,
+      .ant-skeleton-paragraph > li {
+        background: linear-gradient(90deg, #1A1A1A 25%, #333333 50%, #1A1A1A 75%) !important;
+        background-size: 200% 100% !important;
+        animation: skeleton-loading 1.4s ease-in-out infinite !important;
+
+        &::after {
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent) !important;
+          animation: skeleton-shimmer 1.4s ease-in-out infinite !important;
+        }
+      }
+    }
+
+    .ant-skeleton {
+      background-color: #1A1A1A !important;
+      border-radius: 8px !important;
+      padding: 20px !important;
+      border: 1px solid #2A2A2A !important;
+    }
+  }
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}

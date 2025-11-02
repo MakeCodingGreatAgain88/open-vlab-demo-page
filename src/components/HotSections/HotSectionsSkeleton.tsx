@@ -1,6 +1,6 @@
 import { Card, Skeleton, Table } from 'antd'
-import './HotSections.css'
-import './HotSectionsSkeleton.css'
+import './HotSections.less'
+import './HotSectionsSkeleton.less'
 
 const HotSectionsSkeleton = () => {
     // 与实际的标题文本保持一致
@@ -85,7 +85,8 @@ const HotSectionsSkeleton = () => {
     const skeletonData = Array(5).fill({key: 0}).map((_, i) => ({key: i}))
 
     return (
-        <div className="hot-sections-desktop hot-sections-skeleton">
+        <div className="hot-sections">
+            <div className="hot-sections-desktop hot-sections-skeleton">
             { sectionTitles.map((title) => (
                 <Card
                     key={ title }
@@ -115,6 +116,7 @@ const HotSectionsSkeleton = () => {
                     />
                 </Card>
             )) }
+            </div>
         </div>
     )
 }
