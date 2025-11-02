@@ -1,4 +1,4 @@
-import { Table, Tooltip, Card } from 'antd';
+import { Table, Tooltip } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import type { ColumnsType, TableProps } from 'antd/es/table';
 import type { MarketDataItem, TagType, IconType } from '@/types';
@@ -164,23 +164,25 @@ const DataTable = memo<DataTableProps>(({ data, loading, selectedTag }: DataTabl
       sortOrder: sortedInfo.name,
       render: (text: string, record: MarketDataItem) => {
         const icon = record.iconType ? iconTypeMap[record.iconType] : null;
-        if (icon) {
-          return (
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+        return (
+          <div className="flex items-center gap-1.5">
+            {icon && (
               <img 
                 src={icon} 
                 alt={record.iconType || 'icon'}
-                style={{ width: '16px', height: '16px', flexShrink: 0, display: 'block' }}
+                className="w-4 h-4 flex-shrink-0 self-center"
                 onError={(e) => {
                   console.error('Failed to load icon for type:', record.iconType, 'icon path:', icon);
                   e.currentTarget.style.display = 'none';
                 }}
               />
+            )}
+            <div className="flex flex-col gap-0.5">
               <span>{text}</span>
-            </span>
-          );
-        }
-        return <span>{text}</span>;
+              <span className="text-xs text-[#86909C]">{record.categoryCode}</span>
+            </div>
+          </div>
+        );
       },
     },
     {

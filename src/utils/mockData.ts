@@ -17,6 +17,46 @@ const generateChartData = (points: number = 50): { time: number; value: number }
   return data;
 };
 
+// 根据名称生成品类代码
+const getCategoryCodeByName = (name: string): string => {
+  // 股指相关代码
+  if (name.includes('50ETF') || name.includes('上证50')) return '510050';
+  if (name.includes('300ETF') || name.includes('沪深300')) return '510300';
+  if (name.includes('500ETF') || name.includes('中证500')) return '510500';
+  if (name.includes('创业板') || name.includes('创业板指')) return '159915';
+  if (name.includes('科创板') || name.includes('科创50')) return '588000';
+  
+  // 期货代码
+  if (name.includes('铜')) return 'CU';
+  if (name.includes('铝')) return 'AL';
+  if (name.includes('锌')) return 'ZN';
+  if (name.includes('镍')) return 'NI';
+  if (name.includes('黄金')) return 'AU';
+  if (name.includes('原油')) return 'SC';
+  if (name.includes('天然气')) return 'NG';
+  if (name.includes('燃油')) return 'FU';
+  if (name.includes('沥青')) return 'BU';
+  if (name === 'PTA') return 'TA';
+  if (name === 'PVC') return 'V';
+  if (name === 'PP') return 'PP';
+  if (name.includes('大豆')) return 'A';
+  if (name.includes('玉米')) return 'C';
+  if (name.includes('小麦')) return 'WH';
+  if (name.includes('棉花')) return 'CF';
+  if (name.includes('白糖')) return 'SR';
+  if (name.includes('豆油')) return 'Y';
+  if (name.includes('棕榈')) return 'P';
+  if (name.includes('螺纹钢')) return 'RB';
+  if (name.includes('热卷')) return 'HC';
+  if (name.includes('铁矿石')) return 'I';
+  if (name.includes('焦炭')) return 'J';
+  if (name.includes('焦煤')) return 'JM';
+  if (name.includes('动力煤')) return 'ZC';
+  
+  // 默认返回名称的简写
+  return name.substring(0, 6).toUpperCase();
+};
+
 // 根据名称确定图标类型
 const getIconTypeByName = (name: string): IconType => {
   // 股指相关
@@ -63,10 +103,12 @@ export const generateMockData = (tag: TagType): MarketDataItem[] => {
     const priceChangePercent = priceChange;
     const latestPrice = 100 + Math.random() * 50;
     const iconType = getIconTypeByName(name);
+    const categoryCode = getCategoryCodeByName(name);
     
     return {
       id: `${tag}-${index}`,
       name,
+      categoryCode,
       iconType,
       latestPrice: Number(latestPrice.toFixed(2)),
       priceChange: Number(priceChange.toFixed(2)),

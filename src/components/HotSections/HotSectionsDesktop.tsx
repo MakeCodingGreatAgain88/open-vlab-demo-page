@@ -39,19 +39,22 @@ const HotSectionsDesktop = memo<HotSectionsDesktopProps>(({ data }: HotSectionsD
           const icon = record.iconType ? iconTypeMap[record.iconType] : null;
           return (
             <Tooltip title={text} styles={{ body: { backgroundColor: '#1D2129', color: '#FFFFFF' } }}>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              <div className="flex items-center gap-1.5">
                 {icon && (
                   <img 
                     src={icon} 
                     alt={record.iconType || 'icon'}
-                    style={{ width: '16px', height: '16px', flexShrink: 0, display: 'block' }}
+                    className="w-4 h-4 flex-shrink-0 self-center"
                     onError={(e) => {
                       console.error('Failed to load icon for type:', record.iconType, 'icon path:', icon);
                       e.currentTarget.style.display = 'none';
                     }}
                   />
                 )}
-                <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{text}</span>
+                <div className="flex flex-col gap-0.5 min-w-0 flex-1">
+                  <span className="overflow-hidden text-ellipsis whitespace-nowrap">{text}</span>
+                  <span className="text-xs text-[#86909C]">{record.categoryCode}</span>
+                </div>
               </div>
             </Tooltip>
           );

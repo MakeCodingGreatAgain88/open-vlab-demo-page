@@ -30,6 +30,7 @@ export type IconType =
 export interface MarketDataItem {
   id: string;
   name: string;
+  categoryCode: string; // 品类代码
   iconType: IconType; // 图标类型
   latestPrice: number;
   priceChange: number; // 涨幅%
