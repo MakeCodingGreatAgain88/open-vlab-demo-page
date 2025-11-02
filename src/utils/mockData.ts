@@ -1,4 +1,4 @@
-import { MarketDataItem, TagType, HotSectionType } from '../types';
+import type { MarketDataItem, TagType, HotSectionType, IconType } from '@/types';
 
 // 生成随机图表数据
 const generateChartData = (points: number = 50): { time: number; value: number }[] => {
@@ -17,6 +17,37 @@ const generateChartData = (points: number = 50): { time: number; value: number }
   return data;
 };
 
+// 根据名称确定图标类型
+const getIconTypeByName = (name: string): IconType => {
+  // 股指相关
+  if (name.includes('ETF') || name.includes('300') || name.includes('500') || name.includes('50') || name.includes('指数') || name.includes('指')) {
+    return '股指';
+  }
+  // 金属相关
+  if (['铜', '铝', '锌', '镍', '黄金', '白银', '铅', '锡'].some(metal => name.includes(metal))) {
+    return '金属';
+  }
+  // 能化相关
+  if (['原油', '天然气', '燃油', '沥青', 'PTA', 'PVC', 'PP', '塑料'].some(chemical => name.includes(chemical))) {
+    return '能化';
+  }
+  // 农副相关
+  if (['大豆', '玉米', '小麦', '棉花', '白糖', '菜籽', '豆粕'].some(agricultural => name.includes(agricultural))) {
+    return '农副';
+  }
+  // 油脂相关
+  if (['豆油', '棕榈', '菜油', '花生油'].some(oil => name.includes(oil))) {
+    return '油脂';
+  }
+  // 黑色相关
+  if (['螺纹钢', '热卷', '铁矿石', '焦炭', '焦煤', '动力煤'].some(ferrous => name.includes(ferrous))) {
+    return '黑色';
+  }
+  // 默认随机分配（排除 '全部' 和交易所类型）
+  const iconTypes: NonNullable<IconType>[] = ['股指', '金属', '能化', '农副', '油脂', '黑色'];
+  return iconTypes[Math.floor(Math.random() * iconTypes.length)];
+};
+
 // 生成模拟数据
 export const generateMockData = (tag: TagType): MarketDataItem[] => {
   const names = [
@@ -31,10 +62,12 @@ export const generateMockData = (tag: TagType): MarketDataItem[] => {
     const priceChange = (Math.random() - 0.5) * 10;
     const priceChangePercent = priceChange;
     const latestPrice = 100 + Math.random() * 50;
+    const iconType = getIconTypeByName(name);
     
     return {
       id: `${tag}-${index}`,
       name,
+      iconType,
       latestPrice: Number(latestPrice.toFixed(2)),
       priceChange: Number(priceChange.toFixed(2)),
       priceChangePercent: Number(priceChangePercent.toFixed(2)),
