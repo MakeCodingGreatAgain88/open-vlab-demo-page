@@ -41,9 +41,56 @@ export default defineConfig({
     port: 3000,
     open: true,
   },
+  esbuild: {
+    drop: ['console', 'debugger'],
+    legalComments: 'none',
+  },
   build: {
     outDir: 'dist',
-    sourcemap: true,
+    sourcemap: false,
+    minify: 'esbuild',
+    cssMinify: true,
+    cssCodeSplit: true,
+    reportCompressedSize: true,
+    chunkSizeWarningLimit: 1000,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'antd-vendor': ['antd', '@ant-design/icons'],
+          'charts-vendor': ['lightweight-charts'],
+        },
+        chunkFileNames: (chunkInfo) => {
+          const facadeModuleId = chunkInfo.facadeModuleId
+            ? chunkInfo.facadeModuleId.split('/').pop()
+            : 'chunk';
+          return `js/${facadeModuleId}-[hash].js`;
+        },
+        entryFileNames: 'js/[name]-[hash].js',
+        assetFileNames: (assetInfo) => {
+          if (!assetInfo.name) {
+            return `assets/[name]-[hash].[ext]`;
+          }
+          const info = assetInfo.name.split('.');
+          const ext = info[info.length - 1];
+          if (/\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/i.test(assetInfo.name)) {
+            return `media/[name]-[hash].[ext]`;
+          }
+          if (/\.(png|jpe?g|gif|svg|webp|avif)(\?.*)?$/.test(assetInfo.name)) {
+            return `images/[name]-[hash].[ext]`;
+          }
+          if (/\.(woff2?|eot|ttf|otf)(\?.*)?$/i.test(assetInfo.name)) {
+            return `fonts/[name]-[hash].[ext]`;
+          }
+          if (ext === 'css') {
+            return `css/[name]-[hash].[ext]`;
+          }
+          return `assets/[name]-[hash].[ext]`;
+        },
+      },
+    },
+    target: 'es2015',
+    assetsInlineLimit: 4096,
   },
 });
 
