@@ -43,6 +43,7 @@
     "less": "^4.4.2",
     "typescript": "^4.9.5",
     "unplugin-auto-import": "^0.17.2",
-    "vite": "^5.0.8"
+    "vite": "^5.0.8",
+    "vite-plugin-seo-prerender": "^1.0.0"
   }
 }

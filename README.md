@@ -16,6 +16,7 @@
 - ✅ **组件化架构**：清晰的组件结构，页面独有组件放在页面 components 目录，公共组件放在全局 components 目录
 - ✅ **样式隔离**：使用 LESS 嵌套语法和顶层 class 包裹，避免样式污染和冲突
 - ✅ **代码组织**：合理的文件结构，页面组件与公共组件分离，易于维护和扩展
+- ✅ **SEO 优化**：完整的 meta 标签配置、Open Graph 标签、预渲染支持，提升搜索引擎排名
 
 ## 🛠️ 技术栈
 
@@ -214,7 +215,7 @@ src/
 ## 🎨 主题配置
 
 项目使用了欧易交易所的颜色风格：
-- **主色**：#1B53E5（欧易蓝）
+- **主色**：#00000（仿欧易主题）
 - **涨幅色**：rgb(239, 83, 80)（红色）
 - **跌幅色**：rgb(8, 153, 129)（绿色）
 - **背景色**：#000000（黑色）
@@ -315,6 +316,27 @@ dist/
 - ✅ 缓存命中率提升，减少重复下载
 - ✅ 代码体积减小，移除调试代码和注释
 - ✅ 样式隔离，避免样式污染和冲突
+
+### 9. SEO 优化策略
+
+#### HTML Meta 标签优化
+- **完整的 meta 信息**：title、description、keywords 等基础 SEO 标签
+- **Open Graph 标签**：Facebook、LinkedIn 等社交媒体分享优化
+- **Twitter Card 标签**：Twitter 分享卡片优化
+- **Canonical URL**：避免重复内容，指向规范 URL
+- **移动端优化**：Apple Touch Icon、移动端适配标签
+
+#### 预渲染优化
+- **静态 HTML 生成**：使用 vite-plugin-seo-prerender 在构建时生成静态 HTML
+- **搜索引擎友好**：为搜索引擎提供完整的 HTML 内容，无需执行 JavaScript
+- **首屏内容优化**：预渲染的关键页面立即可见，提升 SEO 排名
+- **自动渲染**：插件会自动等待页面完全渲染，无需手动配置渲染事件
+
+**SEO 优化效果**：
+- ✅ 搜索引擎可以立即抓取完整的页面内容
+- ✅ 社交媒体分享显示完整的预览信息
+- ✅ 提升搜索引擎排名和收录速度
+- ✅ 改善首屏加载体验
 
 ## 👀 预览
 
@@ -508,16 +530,142 @@ import logoBlur from './assets/logo.png?w=20&format=webp&blur=10'
 />
 ```
 
+### 4. 预渲染优化 - vite-plugin-seo-prerender
+
+**目的**：提升 SEO 效果，为搜索引擎提供静态 HTML 内容
+
+**实现方案**：
+```bash
+# 安装 vite-plugin-seo-prerender
+npm install --save-dev vite-plugin-seo-prerender
+```
+
+**配置 vite.config.ts**：
+```typescript
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+// ... 其他导入
+// @ts-ignore - vite-plugin-seo-prerender 没有类型定义
+import seoPrerender from 'vite-plugin-seo-prerender';
+
+export default defineConfig(({ command, mode }) => {
+  const isProduction = command === 'build' && mode === 'production';
+  
+  return {
+    plugins: [
+      // ... 其他插件
+      react(),
+      // 生产环境启用预渲染
+      ...(isProduction
+        ? [
+            seoPrerender({
+              routes: [
+                '/',
+                '/market',
+                // 预渲染一些热门详情页示例（根据实际需要调整）
+                '/market/510050', // 上证50ETF
+                '/market/510300', // 沪深300ETF
+                '/market/510500', // 中证500ETF
+              ],
+            }),
+          ]
+        : []),
+    ],
+    // ... 其他配置
+  };
+});
+```
+
+**重要说明**：
+- 插件只在生产构建时启用（`command === 'build' && mode === 'production'`）
+- 开发环境不会执行预渲染，不影响开发体验
+- 使用 `@ts-ignore` 注释可忽略类型错误（插件暂无官方类型定义）
+
+**工作原理**：
+1. **构建时预渲染**：在构建生产版本时，插件会启动无头浏览器访问指定路由
+2. **自动等待渲染完成**：插件会自动等待页面完全渲染（无需手动配置渲染事件）
+3. **生成静态 HTML**：将渲染后的 HTML 内容保存为静态文件
+4. **SEO 友好**：搜索引擎可以直接抓取静态 HTML，无需执行 JavaScript
+
+**预渲染路由配置**：
+- **静态路由**：直接列出需要预渲染的路由路径
+- **动态路由**：为热门或重要页面生成具体的路由路径
+- **自定义路径**：根据实际业务需求添加需要预渲染的页面
+
+**优化效果**：
+- ✅ **提升 SEO 排名**：搜索引擎可以立即抓取完整的 HTML 内容
+- ✅ **更快的内容发现**：无需等待 JavaScript 执行，内容立即可见
+- ✅ **首屏加载优化**：预渲染的页面无需等待客户端渲染
+- ✅ **社交分享优化**：社交媒体爬虫可以抓取完整的页面内容
+- ✅ **降级兼容**：即使 JavaScript 禁用，预渲染的页面仍可正常显示内容
+
+**注意事项**：
+- ✅ **仅生产构建**：预渲染只在生产构建时执行，开发环境不会预渲染，不影响开发体验
+- ✅ **自动渲染等待**：`vite-plugin-seo-prerender` 会自动等待页面渲染完成，无需手动配置渲染事件
+- ✅ **无需额外代码**：不需要在入口文件中添加任何预渲染相关的代码
+- ⚠️ **构建时访问**：预渲染的路由需要在构建时就能访问（不能依赖外部 API）
+- ⚠️ **初始状态**：如果页面有动态内容，预渲染可能包含初始状态
+- ⚠️ **构建时间**：预渲染会增加构建时间，建议合理选择需要预渲染的路由（重要页面和热门页面）
+- ⚠️ **类型定义**：插件暂无官方 TypeScript 类型定义，使用 `@ts-ignore` 忽略类型错误
+
+**推荐实践**：
+- 为重要页面和热门页面配置预渲染（首页、主要列表页、热门详情页等）
+- 动态路由建议只预渲染部分热门或重要页面，避免构建时间过长
+- 如果页面依赖实时数据，考虑使用骨架屏或加载状态来改善预渲染效果
+
+**构建和部署**：
+```bash
+# 构建生产版本（会自动执行预渲染）
+npm run build
+```
+
+**构建输出示例**：
+```
+✓ built in 8.29s
+[vite-plugin-seo-prerender:routes] is start..
+Local: http://localhost:4173
+[vite-plugin-seo-prerender:routes] / => dist/index.html is success!
+[vite-plugin-seo-prerender:routes] /market => dist/market/index.html is success!
+[vite-plugin-seo-prerender:routes] /market/510050 => dist/market/510050/index.html is success!
+[vite-plugin-seo-prerender:routes] /market/510300 => dist/market/510300/index.html is success!
+[vite-plugin-seo-prerender:routes] /market/510500 => dist/market/510500/index.html is success!
+[vite-plugin-seo-prerender:routes] is complete
+```
+
+**预渲染输出结构**：
+```
+dist/
+├── index.html                    # 首页（/）
+├── market/
+│   ├── index.html               # 市场概览页（/market）
+│   ├── 510050/
+│   │   └── index.html           # 上证50ETF详情页（/market/510050）
+│   ├── 510300/
+│   │   └── index.html           # 沪深300ETF详情页（/market/510300）
+│   └── 510500/
+│       └── index.html           # 中证500ETF详情页（/market/510500）
+├── js/                          # JavaScript 文件
+├── css/                         # CSS 文件
+└── images/                      # 图片资源
+```
+
+**部署说明**：
+- 预渲染的 HTML 文件可直接部署到静态服务器
+- 所有路由都会生成对应的静态 HTML 文件
+- 搜索引擎可以直接抓取这些静态 HTML，无需执行 JavaScript
+- 如果服务器支持，建议配置 URL 重写规则，使路由访问更友好
+
 ## 📝 注意事项
 
-- 项目使用模拟数据，实际项目中需要替换为真实 API
-- 图表数据为随机生成，实际使用需要从后端获取
-- 响应式布局已优化，可在不同设备上正常访问
-- 项目使用 Auto Import 插件自动导入 React Hooks，无需手动 import
-- 数据缓存机制确保筛选和排序时的数据一致性
+- **模拟数据**：项目使用模拟数据，实际项目中需要替换为真实 API
+- **图表数据**：图表数据为随机生成，实际使用需要从后端获取
+- **响应式布局**：响应式布局已优化，可在不同设备上正常访问
+- **Auto Import**：项目使用 Auto Import 插件自动导入 React Hooks，无需手动 import
+- **数据缓存**：数据缓存机制确保筛选和排序时的数据一致性
 - **样式隔离**：所有组件样式使用 LESS 嵌套和顶层 class 包裹，避免样式冲突
 - **组件组织**：页面独有组件放在 `pages/[Page]/components`，公共组件放在 `components`
 - **Layout 统一管理**：Layout 组件在 App.tsx 中统一管理，页面只关注业务逻辑
+- **预渲染优化**：项目已配置 `vite-plugin-seo-prerender` 进行 SEO 预渲染，生产构建时会自动生成静态 HTML
 
 ## 🔧 开发规范
 

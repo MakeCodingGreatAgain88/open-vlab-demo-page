@@ -2,29 +2,49 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import AutoImport from 'unplugin-auto-import/vite';
-import tailwindcss from '@tailwindcss/vite'
+import tailwindcss from '@tailwindcss/vite';
+// @ts-ignore - vite-plugin-seo-prerender 没有类型定义
+import seoPrerender from 'vite-plugin-seo-prerender';
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [
-    tailwindcss(),
-    AutoImport({
-      imports: [
-        'react',
-        'react-router-dom',
-        {
-          'react': ['StrictMode', 'Suspense', 'Fragment'], // 明确指定 JSX 组件
+export default defineConfig(({ command, mode }) => {
+  const isProduction = command === 'build' && mode === 'production';
+  
+  return {
+    plugins: [
+      tailwindcss(),
+      AutoImport({
+        imports: [
+          'react',
+          'react-router-dom',
+          {
+            'react': ['StrictMode', 'Suspense', 'Fragment'], // 明确指定 JSX 组件
+          },
+        ],
+        dts: './auto-imports.d.ts', // 自动生成类型声明文件
+        eslintrc: {
+          enabled: true, // 自动生成 .eslintrc-auto-import.json
+          filepath: './.eslintrc-auto-import.json',
+          globalsPropValue: true,
         },
-      ],
-      dts: './auto-imports.d.ts', // 自动生成类型声明文件
-      eslintrc: {
-        enabled: true, // 自动生成 .eslintrc-auto-import.json
-        filepath: './.eslintrc-auto-import.json',
-        globalsPropValue: true,
-      },
-    }),
-    react(), // react 插件应该在 AutoImport 之后，以便处理已注入的导入
-  ],
+      }),
+      react(), // react 插件应该在 AutoImport 之后，以便处理已注入的导入
+      // 生产环境启用预渲染
+      ...(isProduction
+        ? [
+            seoPrerender({
+              routes: [
+                '/',
+                '/market',
+                // 预渲染一些热门详情页示例（根据实际需要调整）
+                '/market/510050', // 上证50ETF
+                '/market/510300', // 沪深300ETF
+                '/market/510500', // 中证500ETF
+              ],
+            }),
+          ]
+        : []),
+    ],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
@@ -93,5 +113,6 @@ export default defineConfig({
     target: 'es2015',
     assetsInlineLimit: 4096,
   },
+  };
 });
 
