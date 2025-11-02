@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import Loading from '@components/Loading';
+import MarketPageSkeleton from '@pages/Market/MarketPageSkeleton';
 import './App.css';
 
 // 使用 React.lazy 懒加载路由组件
@@ -14,7 +15,7 @@ const App = () => {
       <Route 
         path="/market" 
         element={
-          <Suspense fallback={<Loading />}>
+          <Suspense fallback={<MarketPageSkeleton />}>
             <Market />
           </Suspense>
         } 

@@ -13,13 +13,10 @@ import ferrousIcon from '@assets/icon/ferrous.svg'
 interface SearchTagsProps {
     selectedTag: TagType;
     onTagChange: (tag: TagType) => void;
-    loading?: boolean;
+    skeletonLoading?: boolean;
 }
 
-const allTags: TagType[] = [
-    '全部', '股指', '金属', '能化', '农副', '油脂', '黑色',
-    '中金所', '上交所'
-]
+const allTags: TagType[] = [ '全部', '股指', '金属', '能化', '农副', '油脂', '黑色', '中金所', '上交所','深交所','上期所','大商所','郑商所','能源中心','广期所' ]
 
 // 标签到图标的映射
 const tagIconMap: Record<TagType, string | null> = {
@@ -40,8 +37,8 @@ const tagIconMap: Record<TagType, string | null> = {
     '广期所': stockIndexIcon
 }
 
-const SearchTags = memo<SearchTagsProps>(({selectedTag, onTagChange, loading = false}: SearchTagsProps) => {
-    if (loading) {
+const SearchTags = memo<SearchTagsProps>(({selectedTag, onTagChange, skeletonLoading = false}: SearchTagsProps) => {
+    if (skeletonLoading) {
         return (
             <div className="search-tags-wrapper">
                 {/* 标题骨架 */ }
@@ -59,9 +56,9 @@ const SearchTags = memo<SearchTagsProps>(({selectedTag, onTagChange, loading = f
                 />
                 {/* 标签列表骨架 */ }
                 <div className="search-tags-list">
-                    { allTags.map(( index) => (
+                    { allTags.map(( tag) => (
                         <Skeleton.Input
-                            key={ index }
+                            key={ tag }
                             active
                             size="small"
                             style={ {

@@ -23,9 +23,10 @@ const iconTypeMap: Record<NonNullable<IconType>, string> = {
 
 interface HotSectionsDesktopProps {
   data: HotSection[];
+  loading?: boolean;
 }
 
-const HotSectionsDesktop = memo<HotSectionsDesktopProps>(({ data }: HotSectionsDesktopProps) => {
+const HotSectionsDesktop = memo<HotSectionsDesktopProps>(({ data, loading = false }: HotSectionsDesktopProps) => {
   const navigate = useNavigate();
   
   const renderSection = (section: HotSection) => {
@@ -72,7 +73,7 @@ const HotSectionsDesktop = memo<HotSectionsDesktopProps>(({ data }: HotSectionsD
           const displayValue = `${value >= 0 ? '+' : ''}${value.toFixed(2)}%`;
           return (
             <Tooltip title={displayValue} styles={{ body: { backgroundColor: '#1D2129', color: '#FFFFFF' } }}>
-              <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              <div className="overflow-hidden text-ellipsis whitespace-nowrap">
                 <PriceChange value={value} />
               </div>
             </Tooltip>
@@ -89,8 +90,8 @@ const HotSectionsDesktop = memo<HotSectionsDesktopProps>(({ data }: HotSectionsD
           const displayValue = `${value >= 0 ? '+' : ''}${value.toFixed(2)}`;
           return (
             <Tooltip title={displayValue} styles={{ body: { backgroundColor: '#1D2129', color: '#FFFFFF' } }}>
-              <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                <span style={{ color: value >= 0 ? 'rgb(239, 83, 80)' : 'rgb(8, 153, 129)' }}>
+              <div className="overflow-hidden text-ellipsis whitespace-nowrap">
+                <span className={value >= 0 ? 'text-[rgb(239,83,80)]' : 'text-[rgb(8,153,129)]'}>
                   {displayValue}
                 </span>
               </div>
@@ -125,17 +126,68 @@ const HotSectionsDesktop = memo<HotSectionsDesktopProps>(({ data }: HotSectionsD
           rowKey="id"
           size="small"
           bordered={false}
+          loading={loading}
           onRow={(record) => ({
             onClick: () => {
               navigate(`/market/${record.categoryCode}`);
             },
-            style: { cursor: 'pointer' },
+            className: 'cursor-pointer',
           })}
         />
       </Card>
     );
   };
 
+  // 如果数据为空且不在加载中，返回空内容
+  if (data.length === 0 && !loading) {
+    return null;
+  }
+
+  // 如果数据为空但在加载中，渲染占位卡片以保持布局
+  if (data.length === 0 && loading) {
+    const sectionTitles = ['隐波最大上升', '隐波最大下降', '波动率溢价最高', '波动率溢价最低'];
+    const columns = [
+      { title: '名称', key: 'name', width: 80, fixed: 'left' as const, className: 'hot-section-col-name' },
+      { title: '标的涨幅%', key: 'price', width: 90, className: 'hot-section-col-price' },
+      { title: '隐波变化', key: 'vol', width: 90, className: 'hot-section-col-vol' },
+      { title: '分时预览', key: 'chart', width: 120, className: 'hot-section-col-chart' },
+    ];
+
+    return (
+      <div className="hot-sections-desktop">
+        {sectionTitles.map((title) => (
+          <Card
+            key={title}
+            title={title}
+            className="hot-section-card h-[432px] flex flex-col"
+            size="small"
+            bodyStyle={{ 
+              flex: 1, 
+              display: 'flex', 
+              flexDirection: 'column', 
+              padding: '12px',
+              minHeight: 0,
+              overflow: 'hidden',
+              height: '384px' // 432px 总高度 - 头部高度 48px
+            }}
+          >
+            <Table
+              dataSource={[]}
+              columns={columns}
+              pagination={false}
+              rowKey="key"
+              size="small"
+              bordered={false}
+              loading={loading}
+              scroll={{ y: 360 }} // 384px body高度 - 24px padding = 360px
+            />
+          </Card>
+        ))}
+      </div>
+    );
+  }
+
+  // 有数据时，直接渲染，Table 的 loading 会在数据上显示遮罩层
   return (
     <div className="hot-sections-desktop">
       {data.map(renderSection)}

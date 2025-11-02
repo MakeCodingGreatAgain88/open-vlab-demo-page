@@ -21,6 +21,7 @@ interface DataTableProps {
   data: MarketDataItem[];
   loading: boolean;
   selectedTag: TagType;
+  skeletonLoading?: boolean;
 }
 
 type SortOrder = 'ascend' | 'descend' | null;
@@ -51,7 +52,7 @@ const iconTypeMap: Record<NonNullable<IconType>, string> = {
   '黑色': ferrousIcon,
 };
 
-const DataTable = memo<DataTableProps>(({ data, loading, selectedTag }: DataTableProps) => {
+const DataTable = memo<DataTableProps>(({ data, loading, selectedTag, skeletonLoading = false }: DataTableProps) => {
   const navigate = useNavigate();
   const [sortedInfo, setSortedInfo] = useState<Record<string, SortOrder>>({});
   const [currentPage, setCurrentPage] = useState(1);
@@ -165,13 +166,13 @@ const DataTable = memo<DataTableProps>(({ data, loading, selectedTag }: DataTabl
         <span 
           onClick={(e) => e.stopPropagation()}
           onMouseDown={(e) => e.stopPropagation()}
-          style={{ display: 'inline-flex', alignItems: 'center' }}
+          className="inline-flex items-center"
         >
           <Tooltip
             title={
               <div className="column-description">
-                <div style={{ fontWeight: 500, marginBottom: 4, color: '#FFFFFF' }}>{title}</div>
-                <div style={{ color: '#FFFFFF' }}>{columnDescriptions[key]}</div>
+                <div className="font-medium mb-1 text-white">{title}</div>
+                <div className="text-white">{columnDescriptions[key]}</div>
               </div>
             }
             placement="top"
@@ -275,7 +276,7 @@ const DataTable = memo<DataTableProps>(({ data, loading, selectedTag }: DataTabl
       sorter: true,
       sortOrder: sortedInfo.volChange,
       render: (value: number) => (
-        <span style={{ color: value >= 0 ? 'rgb(239, 83, 80)' : 'rgb(8, 153, 129)' }}>
+        <span className={value >= 0 ? 'text-[rgb(239,83,80)]' : 'text-[rgb(8,153,129)]'}>
           {value >= 0 ? '+' : ''}{value.toFixed(2)}
         </span>
       ),
@@ -288,7 +289,7 @@ const DataTable = memo<DataTableProps>(({ data, loading, selectedTag }: DataTabl
       sorter: true,
       sortOrder: sortedInfo.volChangeSpeed,
       render: (value: number) => (
-        <span style={{ color: value >= 0 ? 'rgb(239, 83, 80)' : 'rgb(8, 153, 129)' }}>
+        <span className={value >= 0 ? 'text-[rgb(239,83,80)]' : 'text-[rgb(8,153,129)]'}>
           {value >= 0 ? '+' : ''}{value.toFixed(2)}
         </span>
       ),
@@ -310,7 +311,7 @@ const DataTable = memo<DataTableProps>(({ data, loading, selectedTag }: DataTabl
       sorter: true,
       sortOrder: sortedInfo.premium,
       render: (value: number) => (
-        <span style={{ color: value >= 0 ? 'rgb(239, 83, 80)' : 'rgb(8, 153, 129)' }}>
+        <span className={value >= 0 ? 'text-[rgb(239,83,80)]' : 'text-[rgb(8,153,129)]'}>
           {value >= 0 ? '+' : ''}{value.toFixed(2)}
         </span>
       ),
@@ -354,7 +355,7 @@ const DataTable = memo<DataTableProps>(({ data, loading, selectedTag }: DataTabl
     },
   ], [sortedInfo, sortedInfoKey, renderColumnTitle, selectedTag]);
 
-  if (loading) {
+  if (skeletonLoading) {
     return <DataTableSkeleton />;
   }
 
@@ -364,7 +365,7 @@ const DataTable = memo<DataTableProps>(({ data, loading, selectedTag }: DataTabl
         key={sortedInfoKey}
         columns={columns}
         dataSource={sortedData}
-        loading={false}
+        loading={loading}
         rowKey="id"
         scroll={{ x: 1600, y: 600 }}
         pagination={{
@@ -382,7 +383,7 @@ const DataTable = memo<DataTableProps>(({ data, loading, selectedTag }: DataTabl
           onClick: () => {
             navigate(`/market/${record.categoryCode}`);
           },
-          style: { cursor: 'pointer' },
+          className: 'cursor-pointer',
         })}
         components={{
           body: {

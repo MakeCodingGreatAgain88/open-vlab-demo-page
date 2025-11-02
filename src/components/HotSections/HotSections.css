@@ -38,6 +38,36 @@
 .hot-section-card .ant-table-wrapper {
   overflow-x: auto;
   overflow-y: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 当 Table 为空且 loading 时，确保占满高度 */
+.hot-section-card .ant-table-wrapper .ant-spin-nested-loading {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.hot-section-card .ant-table-wrapper .ant-spin-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.hot-section-card .ant-table-wrapper .ant-table {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.hot-section-card .ant-table-wrapper .ant-table-body {
+  flex: 1;
+  overflow-y: auto;
 }
 
 .hot-section-card .ant-table {

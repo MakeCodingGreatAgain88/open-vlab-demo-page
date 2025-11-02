@@ -6,9 +6,10 @@ import PriceChange from '@components/PriceChange';
 
 interface HotSectionsMobileProps {
   data: HotSection[];
+  loading?: boolean;
 }
 
-const HotSectionsMobile = memo<HotSectionsMobileProps>(({ data }: HotSectionsMobileProps) => {
+const HotSectionsMobile = memo<HotSectionsMobileProps>(({ data, loading: _loading = false }: HotSectionsMobileProps) => {
   const [selectedSection, setSelectedSection] = useState<HotSectionType>('volUp');
   const [expanded, setExpanded] = useState<boolean>(false);
 
@@ -61,7 +62,7 @@ const HotSectionsMobile = memo<HotSectionsMobileProps>(({ data }: HotSectionsMob
                 </div>
                 <div className="hot-section-item-row">
                   <span className="hot-section-item-label">变化：</span>
-                  <span style={{ color: item.volChange >= 0 ? 'rgb(239, 83, 80)' : 'rgb(8, 153, 129)' }}>
+                  <span className={item.volChange >= 0 ? 'text-[rgb(239,83,80)]' : 'text-[rgb(8,153,129)]'}>
                     {item.volChange >= 0 ? '+' : ''}{item.volChange.toFixed(2)}
                   </span>
                 </div>

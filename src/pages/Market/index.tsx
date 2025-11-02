@@ -27,13 +27,13 @@ const Market = () => {
         >
           <div className="w-full max-w-full overflow-x-hidden">
             <ErrorBoundary>
-              <SearchTags selectedTag={selectedTag} onTagChange={setSelectedTag} loading={loading} />
+              <SearchTags selectedTag={selectedTag} onTagChange={setSelectedTag} skeletonLoading={false} />
             </ErrorBoundary>
             <ErrorBoundary>
-              <HotSections data={hotSectionsData} loading={loading} />
+              <HotSections data={hotSectionsData} loading={loading} skeletonLoading={false} />
             </ErrorBoundary>
             <ErrorBoundary>
-              <DataTable data={tableData} loading={loading} selectedTag={selectedTag} />
+              <DataTable data={tableData} loading={loading} selectedTag={selectedTag} skeletonLoading={false} />
             </ErrorBoundary>
           </div>
         </Content>
