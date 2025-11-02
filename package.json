@@ -2,12 +2,15 @@
   "name": "open-vlab-demo-page",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "dependencies": {
     "@ant-design/icons": "^5.5.1",
+    "@tailwindcss/vite": "^4.1.16",
     "antd": "^5.28.0",
     "lightweight-charts": "^5.0.9",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "tailwindcss": "^4.1.16"
   },
   "scripts": {
     "dev": "vite",
