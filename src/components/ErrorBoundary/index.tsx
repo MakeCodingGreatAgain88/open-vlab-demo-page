@@ -57,7 +57,15 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
           title="页面出现错误"
           subTitle={this.state.error?.message || '抱歉，页面加载时出现了错误'}
           extra={[
-            <Button type="primary" key="retry" onClick={this.handleReset}>
+            <Button 
+              key="retry" 
+              onClick={this.handleReset}
+              style={{ 
+                backgroundColor: '#FFFFFF',
+                borderColor: '#1A1A1A',
+                color: '#000000'
+              }}
+            >
               重试
             </Button>,
           ]}
