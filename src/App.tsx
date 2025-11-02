@@ -1,47 +1,16 @@
-import { Layout } from 'antd';
-import Header from '@components/Header';
-import SearchTags from '@components/SearchTags';
-import HotSections from '@components/HotSections';
-import DataTable from '@components/DataTable';
-import ErrorBoundary from '@components/ErrorBoundary';
-import { useMarketData } from '@hooks/useMarketData';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import Market from '@pages/Market';
+import MarketDetails from '@pages/MarketDetails';
 import './App.css';
 
-const { Content } = Layout;
-
 const App = () => {
-  const {
-    selectedTag,
-    setSelectedTag,
-    hotSectionsData,
-    tableData,
-    loading,
-  } = useMarketData();
-
   return (
-    <ErrorBoundary>
-      <Layout className="min-h-screen">
-        <Header />
-        <Content 
-          className="w-full max-w-full overflow-x-hidden"
-          style={{ padding: '24px' }}
-        >
-          <div className="w-full max-w-full overflow-x-hidden">
-            <ErrorBoundary>
-              <SearchTags selectedTag={selectedTag} onTagChange={setSelectedTag} />
-            </ErrorBoundary>
-            <ErrorBoundary>
-              <HotSections data={hotSectionsData} loading={loading} />
-            </ErrorBoundary>
-            <ErrorBoundary>
-              <DataTable data={tableData} loading={loading} selectedTag={selectedTag} />
-            </ErrorBoundary>
-          </div>
-        </Content>
-      </Layout>
-    </ErrorBoundary>
+    <Routes>
+      <Route path="/" element={<Navigate to="/market" replace />} />
+      <Route path="/market" element={<Market />} />
+      <Route path="/market/:code" element={<MarketDetails />} />
+    </Routes>
   );
 };
 
 export default App;
-
