@@ -1,28 +1,11 @@
-.app-layout {
-  min-height: 100vh;
+/* Content 组件样式 - 使用内联样式和 CSS 结合 */
+.ant-layout-content {
+  padding: 24px !important;
 }
 
-.app-content {
-  padding: 24px 24px 24px 24px;
-  width: 100%;
-  max-width: 100%;
-  overflow-x: hidden;
-}
-
-.container {
-  width: 100%;
-  max-width: 100%;
-  overflow-x: hidden;
-}
-
-/* 响应式布局 */
 @media (max-width: 768px) {
-  .app-content {
-    padding: 12px;
-  }
-  
-  .container {
-    max-width: 100%;
+  .ant-layout-content {
+    padding: 16px !important;
   }
 }
 

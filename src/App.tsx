@@ -20,10 +20,13 @@ const App = () => {
 
   return (
     <ErrorBoundary>
-      <Layout className="app-layout">
+      <Layout className="min-h-screen">
         <Header />
-        <Content className="app-content">
-          <div className="container">
+        <Content 
+          className="w-full max-w-full overflow-x-hidden"
+          style={{ padding: '24px' }}
+        >
+          <div className="w-full max-w-full overflow-x-hidden">
             <ErrorBoundary>
               <SearchTags selectedTag={selectedTag} onTagChange={setSelectedTag} />
             </ErrorBoundary>
