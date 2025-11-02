@@ -28,7 +28,8 @@
       "@utils/*": ["./src/utils/*"],
       "@hooks/*": ["./src/hooks/*"],
       "@types/*": ["./src/types/*"],
-      "@config/*": ["./src/config/*"]
+      "@config/*": ["./src/config/*"],
+      "@pages/*": ["./src/pages/*"]
     },
     "allowSyntheticDefaultImports": true
   },
