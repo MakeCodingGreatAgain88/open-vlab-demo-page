@@ -1,15 +1,14 @@
-import React from 'react';
 import { Layout } from 'antd';
-import Header from './components/Header';
-import SearchTags from './components/SearchTags';
-import HotSections from './components/HotSections';
-import DataTable from './components/DataTable';
-import { useMarketData } from './hooks/useMarketData';
+import Header from '@components/Header';
+import SearchTags from '@components/SearchTags';
+import HotSections from '@components/HotSections';
+import DataTable from '@components/DataTable';
+import { useMarketData } from '@hooks/useMarketData';
 import './App.css';
 
 const { Content } = Layout;
 
-const App: React.FC = () => {
+const App = () => {
   const {
     selectedTag,
     setSelectedTag,
@@ -25,7 +24,7 @@ const App: React.FC = () => {
         <div className="container">
           <SearchTags selectedTag={selectedTag} onTagChange={setSelectedTag} />
           <HotSections data={hotSectionsData} loading={loading} />
-          <DataTable data={tableData} loading={loading} />
+          <DataTable data={tableData} loading={loading} selectedTag={selectedTag} />
         </div>
       </Content>
     </Layout>
