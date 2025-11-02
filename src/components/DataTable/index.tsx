@@ -158,7 +158,7 @@ const DataTable = memo<DataTableProps>(({ data, loading, selectedTag }: DataTabl
       title: renderColumnTitle('name', '名称'),
       dataIndex: 'name',
       key: 'name',
-      width: 120,
+      width: 100,
       fixed: 'left' as const,
       sorter: true,
       sortOrder: sortedInfo.name,
@@ -306,7 +306,7 @@ const DataTable = memo<DataTableProps>(({ data, loading, selectedTag }: DataTabl
   ], [sortedInfo, renderColumnTitle, selectedTag]);
 
   return (
-    <Card className="data-table-card">
+    <div className="data-table-card">
       <Table
         columns={columns}
         dataSource={getSortedData()}
@@ -337,7 +337,7 @@ const DataTable = memo<DataTableProps>(({ data, loading, selectedTag }: DataTabl
           },
         }}
       />
-    </Card>
+    </div>
   );
 });
 
