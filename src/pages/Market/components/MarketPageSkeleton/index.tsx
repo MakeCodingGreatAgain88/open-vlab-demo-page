@@ -1,11 +1,8 @@
-import { Layout, Skeleton } from 'antd'
-import Header from '@components/Header'
-import HotSectionsSkeleton from '@components/HotSections/HotSectionsSkeleton'
-import DataTableSkeleton from '@components/DataTable/DataTableSkeleton'
-import '@components/SearchTags/SearchTags.less'
+import { Skeleton } from 'antd'
+import HotSectionsSkeleton from '../HotSections/HotSectionsSkeleton'
+import DataTableSkeleton from '../DataTable/DataTableSkeleton'
+import '../SearchTags/SearchTags.less'
 import './MarketPageSkeleton.less'
-
-const {Content} = Layout
 
 // 搜索标签骨架图
 const SearchTagsSkeleton = () => {
@@ -48,19 +45,13 @@ const SearchTagsSkeleton = () => {
 
 const MarketPageSkeleton = () => {
     return (
-        <Layout className="min-h-screen">
-            <Header/>
-            <Content
-                className="w-full max-w-full overflow-x-hidden"
-                style={ {padding: '24px'} }
-            >
-                <div className="w-full max-w-full overflow-x-hidden">
-                    <SearchTagsSkeleton/>
-                    <HotSectionsSkeleton/>
-                    <DataTableSkeleton/>
-                </div>
-            </Content>
-        </Layout>
+        <div className="w-full max-w-full overflow-x-hidden" style={ {padding: '24px'} }>
+            <div className="w-full max-w-full overflow-x-hidden">
+                <SearchTagsSkeleton/>
+                <HotSectionsSkeleton/>
+                <DataTableSkeleton/>
+            </div>
+        </div>
     )
 }
 

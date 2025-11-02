@@ -1,12 +1,8 @@
-import { Layout } from 'antd';
-import Header from '@components/Header';
-import SearchTags from '@components/SearchTags';
-import HotSections from '@components/HotSections';
-import DataTable from '@components/DataTable';
+import SearchTags from './components/SearchTags';
+import HotSections from './components/HotSections';
+import DataTable from './components/DataTable';
 import ErrorBoundary from '@components/ErrorBoundary';
 import { useMarketData } from '@hooks/useMarketData';
-
-const { Content } = Layout;
 
 const Market = () => {
   const {
@@ -19,25 +15,19 @@ const Market = () => {
 
   return (
     <ErrorBoundary>
-      <Layout className="min-h-screen">
-        <Header />
-        <Content 
-          className="w-full max-w-full overflow-x-hidden"
-          style={{ padding: '24px' }}
-        >
-          <div className="w-full max-w-full overflow-x-hidden">
-            <ErrorBoundary>
-              <SearchTags selectedTag={selectedTag} onTagChange={setSelectedTag} skeletonLoading={false} />
-            </ErrorBoundary>
-            <ErrorBoundary>
-              <HotSections data={hotSectionsData} loading={loading} skeletonLoading={false} />
-            </ErrorBoundary>
-            <ErrorBoundary>
-              <DataTable data={tableData} loading={loading} selectedTag={selectedTag} skeletonLoading={false} />
-            </ErrorBoundary>
-          </div>
-        </Content>
-      </Layout>
+      <div className="w-full max-w-full overflow-x-hidden" style={{ padding: '24px' }}>
+        <div className="w-full max-w-full overflow-x-hidden">
+          <ErrorBoundary>
+            <SearchTags selectedTag={selectedTag} onTagChange={setSelectedTag} skeletonLoading={false} />
+          </ErrorBoundary>
+          <ErrorBoundary>
+            <HotSections data={hotSectionsData} loading={loading} skeletonLoading={false} />
+          </ErrorBoundary>
+          <ErrorBoundary>
+            <DataTable data={tableData} loading={loading} selectedTag={selectedTag} skeletonLoading={false} />
+          </ErrorBoundary>
+        </div>
+      </div>
     </ErrorBoundary>
   );
 };

@@ -1,14 +1,11 @@
-import { Layout, Card, Space, Segmented } from 'antd';
-import Header from '@components/Header';
+import { Card, Space, Segmented } from 'antd';
 import ProgressGauge from '@components/GaugeChart';
 import PriceChange from '@components/PriceChange';
 import ErrorBoundary from '@components/ErrorBoundary';
 import { useParams } from 'react-router-dom';
 import { useMarketDetails } from '@hooks/useMarketDetails';
-import ChartView from './ChartView';
+import ChartView from './components/ChartView';
 import './MarketDetails.less';
-
-const { Content } = Layout;
 
 type ChartType = '分时' | '5日' | '日线';
 
@@ -19,12 +16,9 @@ const MarketDetails = () => {
   if (loading) {
     return (
       <ErrorBoundary>
-        <Layout className="min-h-screen">
-          <Header />
-          <Content style={{ padding: '24px' }}>
-            <div>加载中...</div>
-          </Content>
-        </Layout>
+        <div style={{ padding: '24px' }}>
+          <div>加载中...</div>
+        </div>
       </ErrorBoundary>
     );
   }
@@ -32,23 +26,17 @@ const MarketDetails = () => {
   if (!data) {
     return (
       <ErrorBoundary>
-        <Layout className="min-h-screen">
-          <Header />
-          <Content style={{ padding: '24px' }}>
-            <div>数据不存在</div>
-          </Content>
-        </Layout>
+        <div style={{ padding: '24px' }}>
+          <div>数据不存在</div>
+        </div>
       </ErrorBoundary>
     );
   }
 
   return (
     <ErrorBoundary>
-      <Layout className="min-h-screen">
-        <Header />
-        <Content className="market-details">
-          <div className="market-details-content">
-          <div className="market-details-container">
+      <div className="market-details market-details-content">
+        <div className="market-details-container">
             {/* Head 区域：展示现价、涨幅百分比、实波、隐波、偏度 */}
             <Card className="market-details-head">
               <Space size="large" wrap className="market-info-space">
@@ -95,9 +83,7 @@ const MarketDetails = () => {
               />
             </Card>
           </div>
-          </div>
-        </Content>
-      </Layout>
+        </div>
     </ErrorBoundary>
   );
 };
