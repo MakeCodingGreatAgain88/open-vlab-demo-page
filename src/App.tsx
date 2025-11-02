@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { lazy } from 'react';
+import { lazy, Suspense } from 'react';
 import Loading from '@components/Loading';
 import './App.css';
 
@@ -9,13 +9,25 @@ const MarketDetails = lazy(() => import('@pages/MarketDetails'));
 
 const App = () => {
   return (
-    <Suspense fallback={<Loading />}>
-      <Routes>
-        <Route path="/" element={<Navigate to="/market" replace />} />
-        <Route path="/market" element={<Market />} />
-        <Route path="/market/:code" element={<MarketDetails />} />
-      </Routes>
-    </Suspense>
+    <Routes>
+      <Route path="/" element={<Navigate to="/market" replace />} />
+      <Route 
+        path="/market" 
+        element={
+          <Suspense fallback={<Loading />}>
+            <Market />
+          </Suspense>
+        } 
+      />
+      <Route 
+        path="/market/:code" 
+        element={
+          <Suspense fallback={<Loading />}>
+            <MarketDetails />
+          </Suspense>
+        } 
+      />
+    </Routes>
   );
 };
 

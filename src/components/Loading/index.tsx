@@ -1,30 +1,28 @@
 import { Spin } from 'antd';
 
 interface LoadingProps {
-  tip?: string;
-  size?: 'small' | 'default' | 'large';
-  fullScreen?: boolean;
+    tip?: string;
+    size?: 'small' | 'default' | 'large';
+    fullScreen?: boolean;
 }
 
+// 通用加载组件，使用 Spin
 const Loading = ({ 
-  tip = '加载中...', 
-  size = 'large',
-  fullScreen = true 
+    tip = '加载中...', 
+    size = 'large',
+    fullScreen = true 
 }: LoadingProps) => {
-  return (
-    <div 
-      className="flex items-center justify-center w-full bg-black"
-      style={{ 
-        height: fullScreen ? '100vh' : '400px',
-        minHeight: fullScreen ? '100vh' : '400px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}
-    >
-      <Spin size={size} tip={tip} />
-    </div>
-  );
+    return (
+        <div 
+            className="w-full bg-black flex items-center justify-center"
+            style={{ 
+                height: fullScreen ? '100vh' : '400px',
+                minHeight: fullScreen ? '100vh' : '400px'
+            }}
+        >
+            <Spin size={size} tip={tip} />
+        </div>
+    );
 };
 
 export default Loading;

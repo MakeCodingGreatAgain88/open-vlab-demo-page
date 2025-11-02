@@ -1,7 +1,7 @@
-import { Spin } from 'antd';
 import type { HotSection } from '@/types';
 import HotSectionsDesktop from './HotSectionsDesktop';
 import HotSectionsMobile from './HotSectionsMobile';
+import HotSectionsSkeleton from './HotSectionsSkeleton';
 import './HotSections.css';
 
 interface HotSectionsProps {
@@ -12,9 +12,12 @@ interface HotSectionsProps {
 const HotSections = memo<HotSectionsProps>(({ data, loading }: HotSectionsProps) => {
   if (loading) {
     return (
-      <div className="hot-sections-loading">
-        <Spin size="large" />
-      </div>
+      <>
+        <HotSectionsSkeleton />
+        <div className="hot-sections-mobile">
+          <HotSectionsSkeleton />
+        </div>
+      </>
     );
   }
 

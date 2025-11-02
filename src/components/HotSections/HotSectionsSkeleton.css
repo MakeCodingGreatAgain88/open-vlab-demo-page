@@ -1,0 +1,74 @@
+/* 热门板块骨架图样式 */
+.hot-sections-skeleton .ant-skeleton-input {
+  background: #1A1A1A !important;
+  border: 1px solid #2A2A2A !important;
+  border-radius: 4px !important;
+}
+
+.hot-sections-skeleton .ant-skeleton-active .ant-skeleton-input {
+  background: linear-gradient(90deg, #1A1A1A 25%, #333333 50%, #1A1A1A 75%) !important;
+  background-size: 200% 100% !important;
+  animation: skeleton-loading 1.4s ease-in-out infinite !important;
+}
+
+.hot-sections-skeleton .ant-skeleton-active .ant-skeleton-input::after {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent) !important;
+  animation: skeleton-shimmer 1.4s ease-in-out infinite !important;
+}
+
+.hot-sections-skeleton .ant-card {
+  background-color: #1A1A1A !important;
+  border: 1px solid #2A2A2A !important;
+  height: 432px !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.hot-sections-skeleton .ant-card-body {
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+}
+
+.hot-sections-skeleton .ant-table-wrapper {
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+}
+
+.hot-sections-skeleton .ant-table {
+  flex: 1 !important;
+  background-color: #1A1A1A !important;
+}
+
+.hot-sections-skeleton .ant-table-cell {
+  background-color: #1A1A1A !important;
+  border-bottom: 1px solid #2A2A2A !important;
+}
+
+.hot-sections-skeleton .ant-table-thead > tr > th {
+  background-color: #1A1A1A !important;
+  border-bottom: 1px solid #2A2A2A !important;
+  color: #FFFFFF !important;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+

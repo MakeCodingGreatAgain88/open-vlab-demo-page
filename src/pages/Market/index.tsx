@@ -27,7 +27,7 @@ const Market = () => {
         >
           <div className="w-full max-w-full overflow-x-hidden">
             <ErrorBoundary>
-              <SearchTags selectedTag={selectedTag} onTagChange={setSelectedTag} />
+              <SearchTags selectedTag={selectedTag} onTagChange={setSelectedTag} loading={loading} />
             </ErrorBoundary>
             <ErrorBoundary>
               <HotSections data={hotSectionsData} loading={loading} />

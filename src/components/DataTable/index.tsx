@@ -6,6 +6,7 @@ import MiniChart from '@components/MiniChart';
 import PriceChange from '@components/PriceChange';
 import ProgressGauge from '@components/GaugeChart';
 import PercentileSlider from '@components/PercentileSlider';
+import DataTableSkeleton from './DataTableSkeleton';
 import './DataTable.css';
 
 // 导入图标
@@ -353,13 +354,17 @@ const DataTable = memo<DataTableProps>(({ data, loading, selectedTag }: DataTabl
     },
   ], [sortedInfo, sortedInfoKey, renderColumnTitle, selectedTag]);
 
+  if (loading) {
+    return <DataTableSkeleton />;
+  }
+
   return (
     <div className="data-table-card">
       <Table
         key={sortedInfoKey}
         columns={columns}
         dataSource={sortedData}
-        loading={loading}
+        loading={false}
         rowKey="id"
         scroll={{ x: 1600, y: 600 }}
         pagination={{
