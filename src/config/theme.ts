@@ -1,27 +1,28 @@
-import { ThemeConfig } from 'antd';
+import type { ThemeConfig } from 'antd';
 
-// 欧易交易所颜色风格主题配置
+// 欧易交易所暗黑色主题配置
 export const themeConfig: ThemeConfig = {
   token: {
-    // 主色：欧易蓝
-    colorPrimary: '#1B53E5',
+    // 主色：黑白主题（不使用蓝色）
+    colorPrimary: '#FFFFFF',
     colorSuccess: 'rgb(8, 153, 129)', // 涨幅绿色
     colorError: 'rgb(239, 83, 80)',   // 跌幅红色
     colorWarning: '#F7B500',
-    colorInfo: '#1B53E5',
+    colorInfo: '#FFFFFF',
     
-    // 背景色
-    colorBgContainer: '#FFFFFF',
-    colorBgElevated: '#FFFFFF',
-    colorBgLayout: '#F5F7FA',
+    // 背景色 - 纯黑主题
+    colorBgContainer: '#000000',
+    colorBgElevated: '#0A0A0A',
+    colorBgLayout: '#000000',
     
-    // 文字颜色
-    colorText: '#1D2129',
+    // 文字颜色 - 暗黑主题
+    colorText: '#FFFFFF',
     colorTextSecondary: '#86909C',
+    colorTextTertiary: '#6B7280',
     
-    // 边框颜色
-    colorBorder: '#E5E6EB',
-    colorBorderSecondary: '#F2F3F5',
+    // 边框颜色 - 纯黑主题
+    colorBorder: '#1A1A1A',
+    colorBorderSecondary: '#0F0F0F',
     
     // 圆角
     borderRadius: 4,
@@ -34,30 +35,68 @@ export const themeConfig: ThemeConfig = {
   },
   components: {
     Layout: {
-      headerBg: '#FFFFFF',
+      headerBg: '#000000',
       headerPadding: '0 24px',
-      bodyBg: '#F5F7FA',
+      bodyBg: '#000000',
     },
     Menu: {
-      itemSelectedBg: '#F0F5FF',
-      itemSelectedColor: '#1B53E5',
-      itemHoverBg: '#F0F5FF',
-      itemHoverColor: '#1B53E5',
-      itemActiveBg: '#E6F0FF',
+      itemSelectedBg: '#1A1A1A',
+      itemSelectedColor: '#FFFFFF',
+      itemHoverBg: '#0F0F0F',
+      itemHoverColor: '#FFFFFF',
+      itemActiveBg: '#1A1A1A',
       itemHeight: 48,
+      itemColor: '#FFFFFF',
     },
     Table: {
-      headerBg: '#FAFBFC',
-      headerColor: '#1D2129',
-      borderColor: '#E5E6EB',
-      rowHoverBg: '#F7F8FA',
+      headerBg: '#0A0A0A',
+      headerColor: '#FFFFFF',
+      borderColor: 'transparent', // 设置边框颜色为透明
+      rowHoverBg: '#0F0F0F',
+      colorBgContainer: '#000000',
+      colorText: '#FFFFFF',
+      colorTextHeading: '#FFFFFF',
+      // 移除行边框
+      cellPaddingBlock: 0,
+      cellPaddingInline: 0,
+    },
+    Card: {
+      colorBgContainer: 'rgb(18, 18, 18)',
+      colorBorderSecondary: '#1A1A1A',
+      colorTextHeading: '#FFFFFF',
     },
     Button: {
-      primaryShadow: '0 2px 4px rgba(27, 83, 229, 0.2)',
+      primaryShadow: '0 2px 4px rgba(255, 255, 255, 0.1)',
+      // 默认按钮样式
+      defaultBg: '#000000',
+      defaultColor: '#FFFFFF',
+      defaultBorderColor: '#1A1A1A',
+      defaultHoverBg: '#0F0F0F',
+      defaultHoverColor: '#FFFFFF',
+      defaultHoverBorderColor: '#FFFFFF',
+      defaultActiveBg: '#1A1A1A',
+      defaultActiveColor: '#FFFFFF',
+      defaultActiveBorderColor: '#FFFFFF',
+      // Text 按钮样式
+      textHoverBg: '#0F0F0F',
+      // 通用样式
+      colorText: '#FFFFFF',
+      colorBgContainer: '#000000',
+      colorBorder: '#1A1A1A',
+      // Primary 按钮样式
+      primaryColor: '#FFFFFF',
+      // Disabled 状态
+      colorTextDisabled: '#6B7280',
+      colorBgContainerDisabled: '#0A0A0A',
     },
     Tag: {
-      defaultBg: '#F2F3F5',
-      defaultColor: '#1D2129',
+      defaultBg: '#1A1A1A',
+      defaultColor: '#FFFFFF',
+    },
+    Input: {
+      colorBgContainer: '#0A0A0A',
+      colorText: '#FFFFFF',
+      colorBorder: '#1A1A1A',
     },
   },
 };
