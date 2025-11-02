@@ -51,6 +51,7 @@ const iconTypeMap: Record<NonNullable<IconType>, string> = {
 };
 
 const DataTable = memo<DataTableProps>(({ data, loading, selectedTag }: DataTableProps) => {
+  const navigate = useNavigate();
   const [sortedInfo, setSortedInfo] = useState<Record<string, SortOrder>>({});
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(20);
@@ -372,6 +373,12 @@ const DataTable = memo<DataTableProps>(({ data, loading, selectedTag }: DataTabl
         size="middle"
         showSorterTooltip={false}
         bordered={false}
+        onRow={(record) => ({
+          onClick: () => {
+            navigate(`/market/${record.categoryCode}`);
+          },
+          style: { cursor: 'pointer' },
+        })}
         components={{
           body: {
             cell: (props: any) => (

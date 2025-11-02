@@ -26,6 +26,8 @@ interface HotSectionsDesktopProps {
 }
 
 const HotSectionsDesktop = memo<HotSectionsDesktopProps>(({ data }: HotSectionsDesktopProps) => {
+  const navigate = useNavigate();
+  
   const renderSection = (section: HotSection) => {
     const columns = [
       {
@@ -123,6 +125,12 @@ const HotSectionsDesktop = memo<HotSectionsDesktopProps>(({ data }: HotSectionsD
           rowKey="id"
           size="small"
           bordered={false}
+          onRow={(record) => ({
+            onClick: () => {
+              navigate(`/market/${record.categoryCode}`);
+            },
+            style: { cursor: 'pointer' },
+          })}
         />
       </Card>
     );
