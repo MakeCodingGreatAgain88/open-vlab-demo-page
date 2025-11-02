@@ -4,6 +4,7 @@ import type { ColumnsType, TableProps } from 'antd/es/table';
 import type { MarketDataItem, TagType, IconType } from '@/types';
 import MiniChart from '@components/MiniChart';
 import PriceChange from '@components/PriceChange';
+import ProgressGauge from '@components/GaugeChart';
 import './DataTable.css';
 
 // 导入图标
@@ -293,7 +294,7 @@ const DataTable = memo<DataTableProps>(({ data, loading, selectedTag }: DataTabl
       width: 120,
       sorter: true,
       sortOrder: sortedInfo.skewPercentile,
-      render: (value: number) => `${value.toFixed(1)}%`,
+      render: (value: number) => <ProgressGauge value={value} />,
     },
     {
       title: renderColumnTitle('chart', '走势预览'),
