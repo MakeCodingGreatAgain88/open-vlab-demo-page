@@ -3,6 +3,7 @@ import Header from '@components/Header';
 import SearchTags from '@components/SearchTags';
 import HotSections from '@components/HotSections';
 import DataTable from '@components/DataTable';
+import ErrorBoundary from '@components/ErrorBoundary';
 import { useMarketData } from '@hooks/useMarketData';
 import './App.css';
 
@@ -18,16 +19,24 @@ const App = () => {
   } = useMarketData();
 
   return (
-    <Layout className="app-layout">
-      <Header />
-      <Content className="app-content">
-        <div className="container">
-          <SearchTags selectedTag={selectedTag} onTagChange={setSelectedTag} />
-          <HotSections data={hotSectionsData} loading={loading} />
-          <DataTable data={tableData} loading={loading} selectedTag={selectedTag} />
-        </div>
-      </Content>
-    </Layout>
+    <ErrorBoundary>
+      <Layout className="app-layout">
+        <Header />
+        <Content className="app-content">
+          <div className="container">
+            <ErrorBoundary>
+              <SearchTags selectedTag={selectedTag} onTagChange={setSelectedTag} />
+            </ErrorBoundary>
+            <ErrorBoundary>
+              <HotSections data={hotSectionsData} loading={loading} />
+            </ErrorBoundary>
+            <ErrorBoundary>
+              <DataTable data={tableData} loading={loading} selectedTag={selectedTag} />
+            </ErrorBoundary>
+          </div>
+        </Content>
+      </Layout>
+    </ErrorBoundary>
   );
 };
 
