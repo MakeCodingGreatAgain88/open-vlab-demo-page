@@ -1,6 +1,5 @@
-import { useState, useEffect, useMemo } from 'react';
-import { TagType, MarketDataItem, HotSection } from '../types';
-import { generateMockData, getHotSectionsData } from '../utils/mockData';
+import type { TagType, MarketDataItem, HotSection } from '@/types';
+import { generateMockData, getHotSectionsData } from '@utils/mockData';
 
 export const useMarketData = () => {
   const [selectedTag, setSelectedTag] = useState<TagType>('全部');
