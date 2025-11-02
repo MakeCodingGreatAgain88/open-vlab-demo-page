@@ -4,7 +4,7 @@
 
 ## 🎯 项目特点
 
-- ✅ **完整的页面布局**：Header 导航、搜索标签、热门板块、数据表格
+- ✅ **完整的页面布局**：Layout 组件统一管理 Header 和 Content，页面只关注业务逻辑
 - ✅ **多页面路由**：市场概览页面和市场详情页面
 - ✅ **高级图表功能**：使用 lightweight-charts 实现交互式行情图表
 - ✅ **响应式设计**：完美适配桌面端和移动端
@@ -13,7 +13,9 @@
 - ✅ **自定义图表组件**：SVG 仪表盘、滑块图表、折线预览图表
 - ✅ **主题定制**：深色主题，欧易交易所颜色风格主题配置
 - ✅ **类型安全**：完整的 TypeScript 类型定义
-- ✅ **组件化架构**：清晰的组件结构，易于维护和扩展
+- ✅ **组件化架构**：清晰的组件结构，页面独有组件放在页面 components 目录，公共组件放在全局 components 目录
+- ✅ **样式隔离**：使用 LESS 嵌套语法和顶层 class 包裹，避免样式污染和冲突
+- ✅ **代码组织**：合理的文件结构，页面组件与公共组件分离，易于维护和扩展
 
 ## 🛠️ 技术栈
 
@@ -23,6 +25,7 @@
 - **lightweight-charts 5.0.9** - 专业图表库
 - **React Router 7.9.5** - 路由管理
 - **Tailwind CSS 4.1.16** - 工具类 CSS 框架
+- **LESS** - CSS 预处理器，支持嵌套语法，便于样式组织
 - **Vite 5.0.8** - 构建工具
 - **React Hooks** - 状态管理
 - **Auto Import** - 自动导入 React Hooks，提升开发效率
@@ -150,39 +153,62 @@ npm start
 
 ```
 src/
-├── components/          # 组件目录
-│   ├── Header/         # 头部导航组件
-│   ├── SearchTags/     # 搜索标签组件
-│   ├── HotSections/    # 热门板块组件
-│   │   ├── HotSectionsDesktop.tsx  # 桌面端展示
-│   │   └── HotSectionsMobile.tsx   # 移动端展示
-│   ├── DataTable/      # 数据表格组件
-│   ├── MiniChart/      # 迷你图表组件（SVG）
-│   ├── GaugeChart/     # 仪表盘组件（SVG）
+├── Layout/             # 布局组件（统一管理 Header 和 Content）
+│   ├── index.tsx       # Layout 组件
+│   └── Layout.less    # Layout 样式
+├── components/         # 公共组件目录（所有页面共享的组件）
+│   ├── Header/        # 头部导航组件
+│   ├── MiniChart/     # 迷你图表组件（SVG）
+│   ├── GaugeChart/    # 仪表盘组件（SVG）
 │   ├── PercentileSlider/  # 滑块图表组件（SVG）
-│   ├── PriceChange/    # 价格变化显示组件
+│   ├── PriceChange/   # 价格变化显示组件
+│   ├── Loading/        # 加载组件
 │   └── ErrorBoundary/  # 错误边界组件
-├── pages/              # 页面目录
-│   ├── Market/         # 市场概览页面
-│   └── MarketDetails/  # 市场详情页面
-│       ├── ChartView.tsx  # 图表组件
-│       └── MarketDetails.css
-├── hooks/              # 自定义 Hooks
+├── pages/             # 页面目录
+│   ├── Market/        # 市场概览页面
+│   │   ├── index.tsx  # 页面入口
+│   │   └── components/  # Market 页面独有组件
+│   │       ├── HotSections/      # 热门板块组件
+│   │       │   ├── index.tsx
+│   │       │   ├── HotSectionsDesktop.tsx
+│   │       │   ├── HotSectionsMobile.tsx
+│   │       │   ├── HotSectionsSkeleton.tsx
+│   │       │   ├── HotSections.less
+│   │       │   └── HotSectionsSkeleton.less
+│   │       ├── SearchTags/       # 搜索标签组件
+│   │       │   ├── index.tsx
+│   │       │   └── SearchTags.less
+│   │       ├── DataTable/         # 数据表格组件
+│   │       │   ├── index.tsx
+│   │       │   ├── DataTableSkeleton.tsx
+│   │       │   ├── DataTable.less
+│   │       │   └── DataTableSkeleton.less
+│   │       └── MarketPageSkeleton/  # 页面骨架图组件
+│   │           ├── index.tsx
+│   │           └── MarketPageSkeleton.less
+│   └── MarketDetails/ # 市场详情页面
+│       ├── index.tsx  # 页面入口
+│       ├── MarketDetails.less  # 页面样式
+│       └── components/  # MarketDetails 页面独有组件
+│           └── ChartView/  # 图表组件
+│               ├── index.tsx
+│               └── ChartView.less
+├── hooks/             # 自定义 Hooks
 │   ├── useMarketData.ts      # 市场数据管理 Hook
 │   └── useMarketDetails.ts   # 市场详情数据管理 Hook
-├── utils/              # 工具函数
+├── utils/             # 工具函数
 │   ├── mockData.ts          # 模拟数据生成
 │   └── marketDetailsData.ts # 市场详情数据生成
-├── types/              # TypeScript 类型定义
+├── types/             # TypeScript 类型定义
 │   └── index.ts
-├── config/             # 配置文件
-│   └── theme.ts        # Ant Design 主题配置
-├── assets/             # 静态资源
-│   └── icon/           # 图标文件
-├── App.tsx             # 主应用组件
-├── App.css             # 应用样式
-├── index.tsx           # 入口文件
-└── index.css           # 全局样式
+├── config/            # 配置文件
+│   └── theme.ts       # Ant Design 主题配置
+├── assets/            # 静态资源
+│   └── icon/          # 图标文件
+├── App.tsx            # 主应用组件（包含路由和 Layout）
+├── App.css            # 应用样式
+├── index.tsx          # 入口文件
+└── index.css          # 全局样式
 ```
 
 ## 🎨 主题配置
@@ -259,11 +285,36 @@ dist/
 - **包体积**：通过代码分割，首屏加载体积减少约 30-50%
 - **缓存效率**：vendor chunks 可长期缓存，提升二次访问速度
 
+### 8. 样式优化策略
+
+#### LESS 预处理器
+- **嵌套语法**：使用 LESS 嵌套语法组织样式，提高可读性和维护性
+- **顶层 class 包裹**：每个组件的样式都被包裹在唯一的顶层 class 中，避免样式污染
+- **样式隔离**：通过顶层 class 实现样式隔离，防止不同组件之间的样式冲突
+
+#### 样式组织结构
+```
+.component-name {
+  // 顶层包裹，唯一标识
+  .child-element {
+    // 子元素样式
+    &:hover {
+      // 伪类样式
+    }
+  }
+  
+  @media (max-width: 768px) {
+    // 响应式样式
+  }
+}
+```
+
 ### 优化效果预期
 - ✅ 首屏加载时间减少 30-50%
 - ✅ 构建时间显著提升（esbuild vs terser）
 - ✅ 缓存命中率提升，减少重复下载
 - ✅ 代码体积减小，移除调试代码和注释
+- ✅ 样式隔离，避免样式污染和冲突
 
 ## 👀 预览
 
@@ -305,6 +356,158 @@ npm run preview
 - ✅ 可复用的自定义组件（仪表盘、滑块、迷你图表等）
 - ✅ 错误边界保护，提升应用稳定性
 
+## 🚀 后续优化方案
+
+### 1. 图片优化 - vite-imagetools
+
+**目的**：优化图片加载性能，实现响应式图片适配
+
+**实现方案**：
+```bash
+# 安装 vite-imagetools
+npm install --save-dev vite-imagetools
+```
+
+**配置 vite.config.ts**：
+```typescript
+import { imagetools } from 'vite-imagetools'
+
+export default defineConfig({
+  plugins: [
+    // ... 其他插件
+    imagetools({
+      // 默认格式：WebP
+      defaultDirectives: (url) => {
+        if (url.searchParams.has('format')) {
+          return new URLSearchParams()
+        }
+        return new URLSearchParams({
+          format: 'webp',
+          quality: '80',
+        })
+      },
+    }),
+  ],
+})
+```
+
+**使用方式**：
+```typescript
+// 原图
+import logo from './assets/logo.png'
+
+// 优化后 - WebP 格式，80% 质量
+import logo from './assets/logo.png?format=webp&quality=80'
+
+// 响应式图片 - 移动端小尺寸
+import logoMobile from './assets/logo.png?w=200&format=webp'
+
+// 响应式图片 - 桌面端大尺寸
+import logoDesktop from './assets/logo.png?w=800&format=webp'
+
+// 多尺寸生成
+import logoSrcset from './assets/logo.png?w=200;400;800&format=webp'
+```
+
+**优化效果**：
+- ✅ 自动转换为 WebP 格式，图片体积减少 25-35%
+- ✅ 支持响应式图片，根据设备加载合适尺寸
+- ✅ 自动生成 srcset，浏览器自动选择最优图片
+- ✅ 支持图片压缩和质量控制
+- ✅ 构建时优化，无需运行时处理
+
+### 2. 移动端图片适配
+
+**目的**：为移动端设备提供合适的图片尺寸，减少流量消耗和加载时间
+
+**实现方案**：
+
+#### 方案 A：使用 picture 标签（推荐）
+```tsx
+import logoMobile from './assets/logo.png?w=200&format=webp'
+import logoDesktop from './assets/logo.png?w=800&format=webp'
+
+<picture>
+  <source 
+    media="(max-width: 768px)" 
+    srcSet={logoMobile}
+    type="image/webp"
+  />
+  <source 
+    media="(min-width: 769px)" 
+    srcSet={logoDesktop}
+    type="image/webp"
+  />
+  <img 
+    src={logoDesktop} 
+    alt="Logo"
+    loading="lazy"
+  />
+</picture>
+```
+
+#### 方案 B：使用 srcset 属性
+```tsx
+import logoSrcset from './assets/logo.png?w=200;400;800&format=webp&as=srcset'
+
+<img 
+  srcSet={logoSrcset}
+  sizes="(max-width: 768px) 200px, (max-width: 1200px) 400px, 800px"
+  src={logoFallback}
+  alt="Logo"
+  loading="lazy"
+/>
+```
+
+#### 方案 C：基于设备像素比适配
+```tsx
+// 1x 设备
+import logo1x from './assets/logo.png?w=200&format=webp'
+
+// 2x 设备（Retina）
+import logo2x from './assets/logo.png?w=400&format=webp'
+
+// 3x 设备
+import logo3x from './assets/logo.png?w=600&format=webp'
+
+<img 
+  src={logo1x}
+  srcSet={`${logo1x} 1x, ${logo2x} 2x, ${logo3x} 3x`}
+  alt="Logo"
+  loading="lazy"
+/>
+```
+
+**移动端优化策略**：
+- ✅ **小尺寸优先**：移动端使用较小尺寸图片（200-400px）
+- ✅ **WebP 格式**：自动转换为 WebP，兼容性好的设备获得更好体验
+- ✅ **懒加载**：使用 `loading="lazy"` 延迟加载非首屏图片
+- ✅ **按需加载**：根据媒体查询只加载需要的图片
+- ✅ **压缩优化**：移动端使用更低质量（70-80%），减小体积
+
+**预期效果**：
+- 📱 移动端图片体积减少 50-70%
+- ⚡ 移动端图片加载时间减少 40-60%
+- 💰 移动端流量消耗减少 50-70%
+- 🎯 根据设备自动选择最优图片
+
+### 3. 图片占位符（Placeholder）
+
+**目的**：在图片加载前显示占位符，提升用户体验
+
+**实现方案**：
+```tsx
+import logo from './assets/logo.png'
+import logoBlur from './assets/logo.png?w=20&format=webp&blur=10'
+
+<img 
+  src={logo}
+  placeholder={logoBlur}
+  alt="Logo"
+  loading="lazy"
+/>
+```
+
 ## 📝 注意事项
 
 - 项目使用模拟数据，实际项目中需要替换为真实 API
@@ -312,10 +515,16 @@ npm run preview
 - 响应式布局已优化，可在不同设备上正常访问
 - 项目使用 Auto Import 插件自动导入 React Hooks，无需手动 import
 - 数据缓存机制确保筛选和排序时的数据一致性
+- **样式隔离**：所有组件样式使用 LESS 嵌套和顶层 class 包裹，避免样式冲突
+- **组件组织**：页面独有组件放在 `pages/[Page]/components`，公共组件放在 `components`
+- **Layout 统一管理**：Layout 组件在 App.tsx 中统一管理，页面只关注业务逻辑
 
 ## 🔧 开发规范
 
 - ✅ **组件化**：所有功能模块都封装为独立组件
+- ✅ **组件组织**：页面独有组件放在页面 components 目录，公共组件放在全局 components 目录
+- ✅ **Layout 管理**：Layout 组件在 App.tsx 中统一管理，页面不关心布局结构
+- ✅ **样式隔离**：使用 LESS 嵌套语法和顶层 class 包裹，避免样式污染
 - ✅ **性能优化**：组件使用 `React.memo` 进行性能优化
 - ✅ **类型安全**：完整的 TypeScript 类型定义
 - ✅ **代码规范**：统一的代码风格和命名规范
