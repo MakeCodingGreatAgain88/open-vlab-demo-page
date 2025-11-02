@@ -1,17 +1,24 @@
 import type { MarketDataItem, TagType, HotSectionType, IconType } from '@/types';
 
 // 生成随机图表数据
-const generateChartData = (points: number = 50): { time: number; value: number }[] => {
-  const data: { time: number; value: number }[] = [];
+const generateChartData = (points: number = 50): { time: number; value: number; value1: number }[] => {
+  const data: { time: number; value: number; value1: number }[] = [];
   let value = 100 + Math.random() * 50;
+  let value1 = value + (Math.random() * 20 - 10); // value1 与 value 有偏差，偏差范围 -10 到 +10（增加初始偏差）
   const now = Math.floor(Date.now() / 1000);
   
   for (let i = 0; i < points; i++) {
     const change = (Math.random() - 0.5) * 2;
     value = Math.max(50, value + change);
+    // value1 跟随 value 变化，但增加更多随机性误差
+    const value1Change = change * (0.7 + Math.random() * 0.6) + (Math.random() - 0.5) * 2.5; // value1 的变化有更大的随机性，不完全跟随 value
+    // 添加额外的随机波动，使 value1 有更多独立性
+    const randomFluctuation = (Math.random() - 0.5) * 1.5;
+    value1 = Math.max(50, value1 + value1Change + randomFluctuation);
     data.push({
       time: now - (points - i) * 60, // 每分钟一个点
       value: Number(value.toFixed(2)),
+      value1: Number(value1.toFixed(2)),
     });
   }
   return data;
