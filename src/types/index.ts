@@ -44,7 +44,7 @@ export interface MarketDataItem {
   currentSkew: number; // 当月偏度
   volPercentile: number; // 隐波比分位
   skewPercentile: number; // 偏度百分位
-  chartData: { time: number; value: number }[]; // 图表数据
+  chartData: { time: number; value: number; value1: number }[]; // 图表数据
 }
 
 // 热门板块类型
