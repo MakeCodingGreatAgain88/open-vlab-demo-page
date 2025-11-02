@@ -1,4 +1,3 @@
-import { useState, useEffect, useMemo } from 'react';
 import type { MarketDataItem } from '@/types';
 import { generateMarketDetailsData } from '@utils/marketDetailsData';
 

@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState, memo } from 'react';
 import { createChart, IChartApi, ISeriesApi, ColorType, CandlestickSeries, LineSeries, createSeriesMarkers } from 'lightweight-charts';
 import type { MarketDataItem } from '@/types';
 import type { CandlestickData, LineData, Time, SeriesMarker } from 'lightweight-charts';

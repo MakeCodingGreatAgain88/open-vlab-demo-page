@@ -1,4 +1,3 @@
-import { memo, useState } from 'react';
 import { Layout, Menu, Button, Dropdown } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
 import './Header.css';
