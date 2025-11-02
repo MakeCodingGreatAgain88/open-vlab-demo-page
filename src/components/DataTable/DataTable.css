@@ -7,6 +7,21 @@
   padding: 16px;
 }
 
+/* 表格排序箭头选中状态颜色为白色 */
+.data-table-card .ant-table-column-sorter-up.on,
+.data-table-card .ant-table-column-sorter-down.on,
+.data-table-card .ant-table-column-sorter-up.active,
+.data-table-card .ant-table-column-sorter-down.active {
+  color: #FFFFFF !important;
+}
+
+.data-table-card .ant-table-column-sorter-up.on .anticon,
+.data-table-card .ant-table-column-sorter-down.on .anticon,
+.data-table-card .ant-table-column-sorter-up.active .anticon,
+.data-table-card .ant-table-column-sorter-down.active .anticon {
+  color: #FFFFFF !important;
+}
+
 .table-column-header {
   display: flex;
   align-items: center;
@@ -24,7 +39,7 @@
 }
 
 .column-info-icon:hover {
-  color: #1B53E5;
+  color: #FFFFFF;
 }
 
 .column-popover {
@@ -38,8 +53,92 @@
 }
 
 .chart-preview-wrapper {
-  width: 100%;
-  min-width: 150px;
+  width: 200px;
+  min-width: 200px;
+  max-width: 200px;
+  overflow: hidden;
+}
+
+/* 隐藏 Lightweight Charts 水印 */
+.chart-preview-wrapper svg[viewBox="0 0 149 17"],
+.chart-preview-wrapper svg[viewBox="0 0 134 17"],
+.chart-preview-wrapper a[href*="tradingview"],
+.chart-preview-wrapper a[href*="lightweight-charts"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* 分页组件颜色为白色 */
+.data-table-card .ant-pagination-item {
+  background: #000000;
+  border-color: #1A1A1A;
+}
+
+.data-table-card .ant-pagination-item a {
+  color: #FFFFFF;
+}
+
+.data-table-card .ant-pagination-item-active {
+  background: #1A1A1A;
+  border-color: #FFFFFF;
+}
+
+.data-table-card .ant-pagination-item-active a {
+  color: #FFFFFF !important;
+}
+
+.data-table-card .ant-pagination-item:hover {
+  border-color: #FFFFFF;
+}
+
+.data-table-card .ant-pagination-item:hover a {
+  color: #FFFFFF;
+}
+
+.data-table-card .ant-pagination-prev .ant-pagination-item-link,
+.data-table-card .ant-pagination-next .ant-pagination-item-link {
+  background: #000000;
+  border-color: #1A1A1A;
+  color: #FFFFFF;
+}
+
+.data-table-card .ant-pagination-prev:hover .ant-pagination-item-link,
+.data-table-card .ant-pagination-next:hover .ant-pagination-item-link {
+  border-color: #FFFFFF;
+  color: #FFFFFF;
+}
+
+.data-table-card .ant-pagination-prev.ant-pagination-disabled .ant-pagination-item-link,
+.data-table-card .ant-pagination-next.ant-pagination-disabled .ant-pagination-item-link {
+  background: #0A0A0A;
+  border-color: #1A1A1A;
+  color: #6B7280;
+}
+
+.data-table-card .ant-select-selector {
+  background: #000000 !important;
+  border-color: #1A1A1A !important;
+  color: #FFFFFF !important;
+}
+
+.data-table-card .ant-select-selection-item {
+  color: #FFFFFF !important;
+}
+
+.data-table-card .ant-select-arrow {
+  color: #FFFFFF !important;
+}
+
+.data-table-card .ant-pagination-options {
+  color: #FFFFFF;
+}
+
+.data-table-card .ant-pagination-options-quick-jumper input {
+  background: #000000;
+  border-color: #1A1A1A;
+  color: #FFFFFF;
 }
 
 /* 响应式布局 */
