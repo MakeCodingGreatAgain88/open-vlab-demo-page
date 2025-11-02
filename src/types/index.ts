@@ -16,10 +16,21 @@ export type TagType =
   | '能源中心'
   | '广期所';
 
+// 图标类型（用于数据项）
+export type IconType = 
+  | '股指'
+  | '金属'
+  | '能化'
+  | '农副'
+  | '油脂'
+  | '黑色'
+  | null;
+
 // 数据项类型
 export interface MarketDataItem {
   id: string;
   name: string;
+  iconType: IconType; // 图标类型
   latestPrice: number;
   priceChange: number; // 涨幅%
   priceChangePercent: number;
