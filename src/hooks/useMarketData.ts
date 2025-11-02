@@ -16,6 +16,9 @@ export const useMarketData = () => {
   const [selectedTag, setSelectedTag] = useState<TagType>('全部');
   const [loading, setLoading] = useState(false);
   const [allData, setAllData] = useState<MarketDataItem[]>([]);
+  
+  // 缓存每个 tag 的数据，确保数据固定不变
+  const dataCache = useRef<Record<TagType, MarketDataItem[]>>({} as Record<TagType, MarketDataItem[]>);
 
   // 当标签改变时，重新加载数据
   useEffect(() => {
@@ -23,8 +26,12 @@ export const useMarketData = () => {
     // 模拟 API 延迟，实际项目中应该调用真实的 API
     setTimeout(() => {
       try {
-        const data = generateMockData(selectedTag);
-        setAllData(data);
+        // 如果缓存中没有该 tag 的数据，则生成新数据并缓存
+        if (!dataCache.current[selectedTag]) {
+          dataCache.current[selectedTag] = generateMockData(selectedTag);
+        }
+        // 使用缓存的数据，确保数据固定
+        setAllData(dataCache.current[selectedTag]);
       } catch (error) {
         console.error('Failed to load market data:', error);
         setAllData([]);
@@ -46,8 +53,10 @@ export const useMarketData = () => {
   }, [allData]);
 
   // 表格数据：直接返回所有数据，由 DataTable 组件负责排序和筛选
+  // 注意：这里直接使用 allData，不创建新数组，确保数据引用稳定
   const tableData = useMemo<MarketDataItem[]>(() => {
-    return allData || [];
+    // 如果 allData 为空，返回空数组；否则返回原数组引用（确保稳定性）
+    return allData.length === 0 ? [] : allData;
   }, [allData]);
 
   return {

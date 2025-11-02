@@ -56,10 +56,11 @@ const DataTable = memo<DataTableProps>(({ data, loading, selectedTag }: DataTabl
   const [pageSize, setPageSize] = useState(20);
   const prevSelectedTagRef = useRef<TagType>(selectedTag);
 
-  // 当筛选条件改变时，重置分页到第一页
+  // 当筛选条件改变时，重置分页到第一页和排序
   useEffect(() => {
     if (prevSelectedTagRef.current !== selectedTag) {
       setCurrentPage(1);
+      setSortedInfo({});
       prevSelectedTagRef.current = selectedTag;
     }
   }, [selectedTag]);
@@ -89,17 +90,52 @@ const DataTable = memo<DataTableProps>(({ data, loading, selectedTag }: DataTabl
       return;
     }
     
+    // 处理排序：当sorter为null或undefined时，清除所有排序
+    if (!sorter) {
+      setSortedInfo({});
+      return;
+    }
+    
     const { field, order } = sorter as { field?: string; order?: SortOrder };
     if (field) {
-      setSortedInfo({ [field]: order || null });
+      // 设置排序状态
+      // 当order为null或undefined时，清除该字段的排序
+      if (order === null || order === undefined) {
+        // 清除排序：删除该字段，创建一个新对象确保状态更新
+        setSortedInfo((prev) => {
+          // 如果字段不在当前状态中，无需更新
+          if (!(field in prev)) {
+            return prev;
+          }
+          // 创建新对象，删除该字段
+          const { [field]: _, ...rest } = prev;
+          // 返回新对象（即使为空也创建新引用）
+          return rest;
+        });
+      } else {
+        // 有有效的排序方向，设置排序状态（只保留当前字段）
+        setSortedInfo({ [field]: order });
+      }
+    } else {
+      // 如果没有field，清除所有排序
+      setSortedInfo({});
     }
   };
 
-  const getSortedData = () => {
+  const sortedData = useMemo(() => {
     const sortKey = Object.keys(sortedInfo)[0];
-    if (!sortKey || !sortedInfo[sortKey]) return data;
+    // 如果没有排序键，或者排序值为null/undefined，返回原始数据引用
+    if (!sortKey || !sortedInfo[sortKey] || sortedInfo[sortKey] === null) {
+      return data;
+    }
 
     const order = sortedInfo[sortKey];
+    // 确保order是有效的排序方向
+    if (order !== 'ascend' && order !== 'descend') {
+      return data;
+    }
+
+    // 创建新数组并排序（不影响原始数据）
     const sorted = [...data].sort((a, b) => {
       let aValue: any = a[sortKey as keyof MarketDataItem];
       let bValue: any = b[sortKey as keyof MarketDataItem];
@@ -118,7 +154,7 @@ const DataTable = memo<DataTableProps>(({ data, loading, selectedTag }: DataTabl
     });
 
     return sorted;
-  };
+  }, [data, sortedInfo]);
 
   const renderColumnTitle = useCallback((key: string, title: string) => {
     return (
@@ -154,6 +190,13 @@ const DataTable = memo<DataTableProps>(({ data, loading, selectedTag }: DataTabl
       </>
     );
   }, []);
+
+  // 创建排序状态的唯一键，确保 columns 在排序变化时正确更新
+  const sortedInfoKey = useMemo(() => {
+    const keys = Object.keys(sortedInfo).sort();
+    const values = keys.map(k => `${k}:${sortedInfo[k]}`).join(',');
+    return values;
+  }, [sortedInfo]);
 
   const columns: ColumnsType<MarketDataItem> = useMemo(() => [
     {
@@ -307,13 +350,14 @@ const DataTable = memo<DataTableProps>(({ data, loading, selectedTag }: DataTabl
         </div>
       ),
     },
-  ], [sortedInfo, renderColumnTitle, selectedTag]);
+  ], [sortedInfo, sortedInfoKey, renderColumnTitle, selectedTag]);
 
   return (
     <div className="data-table-card">
       <Table
+        key={sortedInfoKey}
         columns={columns}
-        dataSource={getSortedData()}
+        dataSource={sortedData}
         loading={loading}
         rowKey="id"
         scroll={{ x: 1600, y: 600 }}
