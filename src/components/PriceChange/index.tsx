@@ -4,11 +4,11 @@ interface PriceChangeProps {
 }
 
 const PriceChange = memo<PriceChangeProps>(({ value, showSign = true }: PriceChangeProps) => {
-  const color = value >= 0 ? 'rgb(239, 83, 80)' : 'rgb(8, 153, 129)';
+  const colorClass = value >= 0 ? 'text-[rgb(239,83,80)]' : 'text-[rgb(8,153,129)]';
   const displayValue = showSign && value >= 0 ? `+${value.toFixed(2)}` : value.toFixed(2);
   
   return (
-    <span style={{ color }}>
+    <span className={colorClass}>
       {displayValue}%
     </span>
   );
