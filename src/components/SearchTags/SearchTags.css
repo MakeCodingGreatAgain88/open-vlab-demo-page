@@ -1,0 +1,67 @@
+.search-tags {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+  padding: 16px;
+  background: #FFFFFF;
+  border-radius: 8px;
+  border: 1px solid #E5E6EB;
+}
+
+.search-tags-label {
+  margin-right: 12px;
+  color: #1D2129;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.search-tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.search-tag {
+  padding: 6px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.3s;
+  border: 1px solid #E5E6EB;
+  background: #FFFFFF;
+  color: #1D2129;
+}
+
+.search-tag:hover {
+  border-color: #1B53E5;
+  color: #1B53E5;
+}
+
+.search-tag.selected {
+  background: #1B53E5;
+  color: #FFFFFF;
+  border-color: #1B53E5;
+}
+
+/* 响应式布局 */
+@media (max-width: 768px) {
+  .search-tags {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px;
+  }
+  
+  .search-tags-label {
+    margin-bottom: 8px;
+    margin-right: 0;
+  }
+  
+  .search-tags-list {
+    width: 100%;
+  }
+  
+  .search-tag {
+    font-size: 12px;
+    padding: 4px 12px;
+  }
+}
+

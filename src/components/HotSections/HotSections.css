@@ -1,0 +1,56 @@
+.hot-sections {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.hot-section-card {
+  border-radius: 8px;
+}
+
+.hot-section-card .ant-card-head {
+  padding: 0 16px;
+  min-height: 48px;
+  border-bottom: 1px solid #E5E6EB;
+}
+
+.hot-section-card .ant-card-head-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.hot-section-card .ant-card-body {
+  padding: 12px;
+}
+
+.hot-sections-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  margin-bottom: 24px;
+}
+
+/* 响应式布局 */
+@media (max-width: 1200px) {
+  .hot-sections {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .hot-sections {
+    grid-template-columns: 1fr;
+  }
+  
+  .hot-section-card .ant-card-head {
+    padding: 0 12px;
+    min-height: 40px;
+  }
+  
+  .hot-section-card .ant-card-body {
+    padding: 8px;
+  }
+}
+

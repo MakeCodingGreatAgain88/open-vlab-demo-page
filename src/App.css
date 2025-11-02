@@ -1,0 +1,23 @@
+.app-layout {
+  min-height: 100vh;
+}
+
+.app-content {
+  padding: 24px 24px 24px 24px;
+}
+
+.container {
+  width: 100%;
+}
+
+/* 响应式布局 */
+@media (max-width: 768px) {
+  .app-content {
+    padding: 12px;
+  }
+  
+  .container {
+    max-width: 100%;
+  }
+}
+

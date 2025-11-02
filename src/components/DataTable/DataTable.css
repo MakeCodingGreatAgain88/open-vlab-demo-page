@@ -1,0 +1,63 @@
+.data-table-card {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.data-table-card .ant-card-body {
+  padding: 16px;
+}
+
+.table-column-header {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.column-info-icon {
+  color: #86909C;
+  font-size: 12px;
+  cursor: help;
+  margin-left: 4px;
+  display: inline-block;
+}
+
+.column-info-icon:hover {
+  color: #1B53E5;
+}
+
+.column-popover {
+  z-index: 1050;
+}
+
+.column-description {
+  max-width: 300px;
+  line-height: 1.6;
+  color: #FFFFFF;
+}
+
+.chart-preview-wrapper {
+  width: 100%;
+  min-width: 150px;
+}
+
+/* 响应式布局 */
+@media (max-width: 768px) {
+  .data-table-card .ant-card-body {
+    padding: 8px;
+  }
+  
+  .table-column-header {
+    font-size: 12px;
+  }
+  
+  .column-info-icon {
+    font-size: 10px;
+  }
+  
+  .chart-preview-wrapper {
+    min-width: 100px;
+  }
+}
+

@@ -1,0 +1,87 @@
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #E5E6EB;
+  padding: 0 24px;
+  height: 64px;
+  line-height: 64px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1B53E5;
+  margin-right: 32px;
+  cursor: pointer;
+}
+
+.header-menu-left {
+  flex: 1;
+  border-bottom: none;
+  line-height: 64px;
+}
+
+.header-menu-left .ant-menu-item {
+  padding: 0 16px;
+  margin: 0 4px;
+}
+
+.header-menu-right {
+  border-bottom: none;
+  line-height: 64px;
+}
+
+.header-menu-right .ant-menu-item {
+  padding: 0 12px;
+  margin: 0 2px;
+}
+
+/* 响应式布局 */
+@media (max-width: 1200px) {
+  .header-menu-left .ant-menu-item {
+    padding: 0 8px;
+    font-size: 14px;
+  }
+  
+  .header-menu-right .ant-menu-item {
+    padding: 0 8px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-header {
+    padding: 0 12px;
+    height: auto;
+    flex-wrap: wrap;
+  }
+  
+  .header-left {
+    width: 100%;
+    margin-bottom: 8px;
+  }
+  
+  .logo {
+    margin-right: 16px;
+    font-size: 18px;
+  }
+  
+  .header-menu-left {
+    flex: 1;
+    overflow-x: auto;
+  }
+  
+  .header-menu-right {
+    width: 100%;
+    border-top: 1px solid #E5E6EB;
+    padding-top: 8px;
+  }
+}
+
