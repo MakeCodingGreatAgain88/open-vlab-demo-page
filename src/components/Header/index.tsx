@@ -1,10 +1,12 @@
-import React from 'react';
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Button, Dropdown } from 'antd';
+import { MenuOutlined } from '@ant-design/icons';
 import './Header.css';
 
 const { Header: AntHeader } = Layout;
 
-const Header: React.FC = React.memo(() => {
+const Header = memo(() => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   const leftMenuItems = [
     { key: 'market', label: '市场' },
     { key: 'quote', label: '行情' },
@@ -34,12 +36,29 @@ const Header: React.FC = React.memo(() => {
           selectable={false}
         />
       </div>
-      <Menu
-        mode="horizontal"
-        items={rightMenuItems}
-        className="header-menu-right"
-        selectable={false}
-      />
+      <div className="header-right-desktop">
+        <Menu
+          mode="horizontal"
+          items={rightMenuItems}
+          className="header-menu-right"
+          selectable={false}
+        />
+      </div>
+      <div className="header-right-mobile">
+        <Dropdown
+          menu={{ items: rightMenuItems }}
+          trigger={['click']}
+          open={mobileMenuOpen}
+          onOpenChange={setMobileMenuOpen}
+          placement="bottomRight"
+        >
+          <Button
+            type="text"
+            icon={<MenuOutlined />}
+            className="header-mobile-menu-btn"
+          />
+        </Dropdown>
+      </div>
     </AntHeader>
   );
 });
