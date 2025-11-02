@@ -5,6 +5,7 @@ import type { MarketDataItem, TagType, IconType } from '@/types';
 import MiniChart from '@components/MiniChart';
 import PriceChange from '@components/PriceChange';
 import ProgressGauge from '@components/GaugeChart';
+import PercentileSlider from '@components/PercentileSlider';
 import './DataTable.css';
 
 // 导入图标
@@ -282,10 +283,10 @@ const DataTable = memo<DataTableProps>(({ data, loading, selectedTag }: DataTabl
       title: renderColumnTitle('volPercentile', '隐波比分位'),
       dataIndex: 'volPercentile',
       key: 'volPercentile',
-      width: 120,
+      width: 140,
       sorter: true,
       sortOrder: sortedInfo.volPercentile,
-      render: (value: number) => `${value.toFixed(1)}%`,
+      render: (value: number) => <PercentileSlider value={value} />,
     },
     {
       title: renderColumnTitle('skewPercentile', '偏度百分位'),
