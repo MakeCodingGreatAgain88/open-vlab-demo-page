@@ -8,15 +8,24 @@ interface MiniChartProps {
 const MiniChart = memo<MiniChartProps>(({ data, height = 40 }: MiniChartProps) => {
   // 将数据转换为 SVG 路径
   const { path, viewBox } = useMemo(() => {
-    if (!data || data.length === 0) {
+    // 边界情况处理：数据为空或无效
+    if (!data || !Array.isArray(data) || data.length === 0) {
       return { path: '', viewBox: '0 0 200 40' };
     }
 
-    // 计算值的范围（留一些边距）
-    const values = data.map((item: { time: number; value: number }) => item.value);
-    const min = Math.min(...values);
-    const max = Math.max(...values);
-    const range = max - min || 1; // 避免除零
+    try {
+      // 计算值的范围（留一些边距）
+      const values = data
+        .map((item: { time: number; value: number }) => item?.value ?? 0)
+        .filter((val) => typeof val === 'number' && !isNaN(val));
+      
+      if (values.length === 0) {
+        return { path: '', viewBox: '0 0 200 40' };
+      }
+
+      const min = Math.min(...values);
+      const max = Math.max(...values);
+      const range = max - min || 1; // 避免除零
     const padding = range * 0.1; // 10% 的边距
     const minValue = min - padding;
     const maxValue = max + padding;
@@ -72,22 +81,26 @@ const MiniChart = memo<MiniChartProps>(({ data, height = 40 }: MiniChartProps) =
       }
     }
 
-    return {
-      path: pathString,
-      viewBox: `0 0 ${svgWidth} ${svgHeight}`,
-    };
+      return {
+        path: pathString,
+        viewBox: `0 0 ${svgWidth} ${svgHeight}`,
+      };
+    } catch (error) {
+      // 错误处理：如果数据转换失败，返回空图表
+      console.error('MiniChart data processing error:', error);
+      return { path: '', viewBox: '0 0 200 40' };
+    }
   }, [data, height]);
 
   return (
     <div 
-      className="lightweight-chart-wrapper"
-      style={{ width: '100%', height: `${height}px`, minHeight: `${height}px` }}
+      className="w-full block"
+      style={{ height: `${height}px`, minHeight: `${height}px` }} // 动态高度需要内联样式
     >
       <svg
         viewBox={viewBox}
         preserveAspectRatio="none"
-        style={{ width: '100%', height: '100%', display: 'block' }}
-        className="mini-chart-svg"
+        className="w-full h-full block"
       >
         <defs>
           {/* 渐变填充（可选） */}
